@@ -2,10 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
-import {
-  ImageCanvas,
-  type ImageCanvasHandle,
-} from "@/components/ImageCanvas";
+import { ImageCanvas, type ImageCanvasHandle } from "@/components/ImageCanvas";
 import { PresetInfoPanel } from "@/components/PresetInfoPanel";
 import { presets } from "@/data/presets";
 
@@ -59,7 +56,11 @@ export default function Home() {
       return;
     }
 
-    if (!file.type.startsWith("image/")) {
+    const isSupportedImage =
+      file.type.startsWith("image/") ||
+      /\.(png|jpe?g|webp)$/i.test(file.name);
+
+    if (!isSupportedImage) {
       alert("画像ファイルを選択してください。");
       return;
     }

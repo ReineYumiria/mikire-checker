@@ -51,6 +51,9 @@ export function ControlPanel({
           <input
             type="file"
             accept="image/png,image/jpeg,image/webp"
+            onClick={(event) => {
+              event.currentTarget.value = "";
+            }}
             onChange={onImageChange}
             className="block w-full cursor-pointer rounded-lg border border-zinc-700 bg-zinc-950 text-sm text-zinc-300 file:mr-3 file:border-0 file:bg-zinc-700 file:px-3 file:py-2 file:text-zinc-100 hover:file:bg-zinc-600"
           />
