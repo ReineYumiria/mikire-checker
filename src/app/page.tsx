@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { ImageCanvas } from "@/components/ImageCanvas";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  ImageCanvas,
+  type ImageCanvasHandle,
+} from "@/components/ImageCanvas";
 import { presets } from "@/data/presets";
 
 export default function Home() {
@@ -11,6 +14,8 @@ export default function Home() {
   const [zoom, setZoom] = useState(100);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
+
+  const imageCanvasRef = useRef<ImageCanvasHandle | null>(null);
 
   const selectedPreset = useMemo(() => {
     return presets.find((preset) => preset.id === selectedPresetId) ?? presets[0];
@@ -52,6 +57,16 @@ export default function Home() {
     setZoom(100);
     setOffsetX(0);
     setOffsetY(0);
+  };
+
+  const handleExportPng = () => {
+    const baseName = imageFileName
+      ? imageFileName.replace(/\.[^/.]+$/, "")
+      : "mikire-checker";
+
+    const fileName = `${baseName}_${selectedPreset.id}.png`;
+
+    imageCanvasRef.current?.exportPng(fileName);
   };
 
   return (
@@ -139,7 +154,9 @@ export default function Home() {
 
             <button
               type="button"
-              className="w-full rounded-lg bg-sky-500 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-400"
+              onClick={handleExportPng}
+              disabled={!imageUrl}
+              className="w-full rounded-lg bg-sky-500 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-400 disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-400"
             >
               PNGで書き出し
             </button>
@@ -161,6 +178,7 @@ export default function Home() {
 
           <div className="flex min-h-[520px] items-center justify-center rounded-xl border border-dashed border-zinc-700 bg-zinc-950 p-6">
             <ImageCanvas
+              ref={imageCanvasRef}
               preset={selectedPreset}
               imageUrl={imageUrl}
               imageFileName={imageFileName}
@@ -192,13 +210,22 @@ export default function Home() {
             </div>
 
             {selectedPreset.safeArea ? (
-              <div>
-                <p className="text-xs text-zinc-500">安全領域</p>
-                <p className="text-base">
-                  {selectedPreset.safeArea.width} ×{" "}
-                  {selectedPreset.safeArea.height}px
-                </p>
-              </div>
+              <>
+                <div>
+                  <p className="text-xs text-zinc-500">安全領域</p>
+                  <p className="text-base">
+                    {selectedPreset.safeArea.width} ×{" "}
+                    {selectedPreset.safeArea.height}px
+                  </p>
+                </div>
+
+                <div className="rounded-lg border border-zinc-700 bg-zinc-950 p-3 text-sm leading-6 text-zinc-300">
+                  <p>水色の枠内が安全領域です。</p>
+                  <p className="mt-1">
+                    暗く表示される部分は、見切れや非推奨表示になりやすい領域です。
+                  </p>
+                </div>
+              </>
             ) : (
               <div>
                 <p className="text-xs text-zinc-500">安全領域</p>
