@@ -1,36 +1,166 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 見切れチェッカー / mikire-checker
 
-## Getting Started
+画像をアップロードして、各サービス向けの表示範囲・安全領域・円形アイコン表示を確認できるWebツールです。
 
-First, run the development server:
+画像はサーバーに送信せず、ブラウザ内だけで処理します。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 概要
+
+見切れチェッカーは、YouTube / X（旧Twitter） / Discord / Steam / note などで使う画像の見切れを確認するためのツールです。
+
+画像を選択し、対象サービスと用途プリセットを選ぶことで、指定サイズのプレビュー、安全領域ガイド、円形アイコン表示などを確認できます。
+
+MVPでは、画像編集ツールではなく「見切れ確認」と「書き出し」に特化します。
+
+## 主な機能
+
+* 画像アップロード
+* 対象サービス選択
+* 用途プリセット選択
+* Canvasプレビュー表示
+* 安全領域ガイド表示
+* 円形アイコンガイド表示
+* ガイド表示ON/OFF
+* ズーム調整
+* マウスホイールでズーム
+* ドラッグで画像位置調整
+* 位置リセット
+* PNG書き出し
+* ガイド付きPNG書き出し
+
+## 対応画像形式
+
+* PNG
+* JPG / JPEG
+* WebP
+
+## 対応プリセット
+
+### YouTube
+
+* サムネイル
+* チャンネルバナー
+* プロフィール画像
+
+### X（旧Twitter）
+
+* ヘッダー
+* プロフィール画像
+* 投稿画像 16:9
+* 投稿画像 正方形
+
+### Discord
+
+* サーバーバナー
+* サーバーアイコン
+
+### Steam
+
+* ヘッダーカプセル
+* スモールカプセル
+* メインカプセル
+* 縦型カプセル
+* プロフィールアバター
+
+### note
+
+* 記事見出し画像
+* クリエイター/マガジンヘッダー
+* プロフィールアイコン
+
+## 基本操作
+
+1. 画像を選択する
+2. 対象サービスを選ぶ
+3. 用途プリセットを選ぶ
+4. 必要に応じてズーム・ドラッグで位置を調整する
+5. 安全領域ガイドを確認する
+6. PNGで書き出す
+
+## ガイド表示について
+
+安全領域ガイドを表示すると、見切れや非推奨表示になりやすい領域が暗く表示されます。
+
+矩形プリセットでは、水色の枠内が安全領域です。
+
+プロフィール画像やアイコン系プリセットでは、水色の円内が表示想定範囲です。
+
+## PNG書き出しについて
+
+通常のPNG書き出しでは、安全領域ガイドは含まれません。
+
+「書き出しにガイドを含める」をONにすると、暗幕と水色枠付きの確認用PNGを書き出せます。
+
+## プライバシー
+
+画像はサーバーに送信されません。
+
+アップロードした画像はブラウザ内でのみ処理されます。
+
+## 開発環境
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+* HTML Canvas
+
+## 開発手順
+
+依存関係をインストールします。
+
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+開発サーバーを起動します。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+ブラウザで以下を開きます。
 
-## Learn More
+```
+http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+## ビルド
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+本番ビルドを作成します。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+npm run build
+```
 
-## Deploy on Vercel
+ビルド結果を起動します。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+npm run start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 現在の開発方針
+
+MVPでは、以下を優先します。
+
+* 登録不要
+* サーバー送信なし
+* ブラウザ内処理
+* 日本語UI
+* 見切れ確認に特化
+* プリセット追加しやすい構成
+* 複雑なデザイン編集機能は入れすぎない
+
+## 今後の予定
+
+* プリセット精度の調整
+* 各サービスの表示仕様の再確認
+* ガイド説明の改善
+* スマホ表示の調整
+* UIの整理
+* 公開用ページ文言の整備
+* README / ROADMAP の拡充
+
+## ライセンス
+
+未定。
