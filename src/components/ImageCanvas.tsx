@@ -8,6 +8,7 @@ import {
   type Dispatch,
   type PointerEvent,
   type SetStateAction,
+  type WheelEvent,
 } from "react";
 import type { Preset } from "@/types/preset";
 
@@ -22,9 +23,14 @@ type ImageCanvasProps = {
   zoom: number;
   offsetX: number;
   offsetY: number;
+  setZoom: Dispatch<SetStateAction<number>>;
   setOffsetX: Dispatch<SetStateAction<number>>;
   setOffsetY: Dispatch<SetStateAction<number>>;
 };
+
+const MIN_ZOOM = 50;
+const MAX_ZOOM = 500;
+const WHEEL_ZOOM_STEP = 10;
 
 export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
   function ImageCanvas(
@@ -35,6 +41,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       zoom,
       offsetX,
       offsetY,
+      setZoom,
       setOffsetX,
       setOffsetY,
     },
@@ -234,6 +241,56 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       };
     };
 
+    const getCanvasPoint = (event: WheelEvent<HTMLCanvasElement>) => {
+      const canvas = canvasRef.current;
+
+      if (!canvas) {
+        return {
+          x: preset.outputWidth / 2,
+          y: preset.outputHeight / 2,
+        };
+      }
+
+      const rect = canvas.getBoundingClientRect();
+      const { scaleX, scaleY } = getCanvasScale();
+
+      return {
+        x: (event.clientX - rect.left) * scaleX,
+        y: (event.clientY - rect.top) * scaleY,
+      };
+    };
+
+    const handleWheel = (event: WheelEvent<HTMLCanvasElement>) => {
+      if (!imageUrl) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const direction = event.deltaY < 0 ? 1 : -1;
+      const nextZoom = Math.min(
+        MAX_ZOOM,
+        Math.max(MIN_ZOOM, zoom + direction * WHEEL_ZOOM_STEP),
+      );
+
+      if (nextZoom === zoom) {
+        return;
+      }
+
+      const point = getCanvasPoint(event);
+      const zoomRatio = nextZoom / zoom;
+
+      const canvasCenterX = preset.outputWidth / 2;
+      const canvasCenterY = preset.outputHeight / 2;
+
+      const relativeX = point.x - canvasCenterX - offsetX;
+      const relativeY = point.y - canvasCenterY - offsetY;
+
+      setOffsetX(point.x - canvasCenterX - relativeX * zoomRatio);
+      setOffsetY(point.y - canvasCenterY - relativeY * zoomRatio);
+      setZoom(nextZoom);
+    };
+
     const handlePointerDown = (event: PointerEvent<HTMLCanvasElement>) => {
       if (!imageUrl) {
         return;
@@ -277,6 +334,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         style={{
           aspectRatio: `${preset.outputWidth} / ${preset.outputHeight}`,
         }}
+        onWheel={handleWheel}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}

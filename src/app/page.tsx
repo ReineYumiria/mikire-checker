@@ -185,6 +185,7 @@ export default function Home() {
               zoom={zoom}
               offsetX={offsetX}
               offsetY={offsetY}
+              setZoom={setZoom}
               setOffsetX={setOffsetX}
               setOffsetY={setOffsetY}
             />
