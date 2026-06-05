@@ -152,7 +152,7 @@ export default function Home() {
             </span>
           </div>
 
-          <div className="flex min-h-[520px] items-center justify-center rounded-xl border border-dashed border-zinc-700 bg-zinc-950 p-6">
+          <div className="flex min-h-[360px] items-center justify-center rounded-xl border border-dashed border-zinc-700 bg-zinc-950 p-3 sm:min-h-[520px] sm:p-6">
             <ImageCanvas
               ref={imageCanvasRef}
               preset={selectedPreset}
