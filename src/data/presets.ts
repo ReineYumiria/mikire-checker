@@ -40,10 +40,10 @@ export const presets: Preset[] = [
     outputWidth: 800,
     outputHeight: 800,
     safeArea: {
-      x: 80,
-      y: 80,
-      width: 640,
-      height: 640,
+      x: 0,
+      y: 0,
+      width: 800,
+      height: 800,
     },
     guideShape: "circle",
     description:
@@ -81,18 +81,19 @@ export const presets: Preset[] = [
     outputWidth: 400,
     outputHeight: 400,
     safeArea: {
-      x: 40,
-      y: 40,
-      width: 320,
-      height: 320,
+      x: 0,
+      y: 0,
+      width: 400,
+      height: 400,
     },
     guideShape: "circle",
     description:
       "X（旧Twitter）のプロフィール画像向けプリセットです。円形表示で外周が見切れやすいため、中央配置を確認します。",
     notes: [
-      "顔・ロゴ・文字などの重要要素は中央付近に収めるのがおすすめです。",
-      "丸アイコン表示を想定して、四隅には重要な情報を置かない方が安全です。",
-    ],
+      "X公式ではプロフィール画像は400×400pxが推奨されています。",
+      "実際の表示は円形になるため、四隅には重要な情報を置かない方が安全です。",
+      "顔・ロゴ・文字などの重要要素は中央寄りに収めるのがおすすめです。",
+  ],
   },
   {
     id: "x-post-16-9",
@@ -147,10 +148,10 @@ export const presets: Preset[] = [
     outputWidth: 512,
     outputHeight: 512,
     safeArea: {
-      x: 51,
-      y: 51,
-      width: 410,
-      height: 410,
+      x: 0,
+      y: 0,
+      width: 512,
+      height: 512,
     },
     guideShape: "circle",
     description:
@@ -247,10 +248,10 @@ export const presets: Preset[] = [
     outputWidth: 184,
     outputHeight: 184,
     safeArea: {
-      x: 18,
-      y: 18,
-      width: 148,
-      height: 148,
+      x: 0,
+      y: 0,
+      width: 184,
+      height: 184,
     },
     guideShape: "circle",
     description:
@@ -308,10 +309,10 @@ export const presets: Preset[] = [
     outputWidth: 500,
     outputHeight: 500,
     safeArea: {
-      x: 50,
-      y: 50,
-      width: 400,
-      height: 400,
+      x: 0,
+      y: 0,
+      width: 500,
+      height: 500,
     },
     guideShape: "circle",
     description:
