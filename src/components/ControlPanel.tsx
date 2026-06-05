@@ -9,11 +9,13 @@ type ControlPanelProps = {
   imageFileName: string | null;
   zoom: number;
   showSafeAreaGuide: boolean;
+  includeGuideInExport: boolean;
   onImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onServiceChange: (service: string) => void;
   onPresetChange: (presetId: string) => void;
   onZoomChange: (zoom: number) => void;
   onShowSafeAreaGuideChange: (show: boolean) => void;
+  onIncludeGuideInExportChange: (include: boolean) => void;
   onResetPosition: () => void;
   onExportPng: () => void;
 };
@@ -27,11 +29,13 @@ export function ControlPanel({
   imageFileName,
   zoom,
   showSafeAreaGuide,
+  includeGuideInExport,
   onImageChange,
   onServiceChange,
   onPresetChange,
   onZoomChange,
   onShowSafeAreaGuideChange,
+  onIncludeGuideInExportChange,
   onResetPosition,
   onExportPng,
 }: ControlPanelProps) {
@@ -112,15 +116,31 @@ export function ControlPanel({
           </div>
         </div>
 
-        <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-800">
-          <input
-            type="checkbox"
-            checked={showSafeAreaGuide}
-            onChange={(event) => onShowSafeAreaGuideChange(event.target.checked)}
-            className="h-4 w-4 accent-sky-500"
-          />
-          <span>安全領域ガイドを表示</span>
-        </label>
+        <div className="space-y-2">
+          <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-800">
+            <input
+              type="checkbox"
+              checked={showSafeAreaGuide}
+              onChange={(event) =>
+                onShowSafeAreaGuideChange(event.target.checked)
+              }
+              className="h-4 w-4 accent-sky-500"
+            />
+            <span>安全領域ガイドを表示</span>
+          </label>
+
+          <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-800">
+            <input
+              type="checkbox"
+              checked={includeGuideInExport}
+              onChange={(event) =>
+                onIncludeGuideInExportChange(event.target.checked)
+              }
+              className="h-4 w-4 accent-sky-500"
+            />
+            <span>書き出しにガイドを含める</span>
+          </label>
+        </div>
 
         <button
           type="button"

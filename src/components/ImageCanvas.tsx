@@ -12,8 +12,12 @@ import {
 } from "react";
 import type { Preset } from "@/types/preset";
 
+type ExportPngOptions = {
+  includeSafeAreaGuide: boolean;
+};
+
 export type ImageCanvasHandle = {
-  exportPng: (fileName: string) => void;
+  exportPng: (fileName: string, options: ExportPngOptions) => void;
 };
 
 type ImageCanvasProps = {
@@ -56,8 +60,8 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
     const lastPointerYRef = useRef(0);
 
     useImperativeHandle(ref, () => ({
-      exportPng: (fileName: string) => {
-        exportPng(fileName);
+      exportPng: (fileName: string, options: ExportPngOptions) => {
+        exportPng(fileName, options);
       },
     }));
 
@@ -230,7 +234,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       context.stroke();
     };
 
-    const exportPng = (fileName: string) => {
+    const exportPng = (fileName: string, options: ExportPngOptions) => {
       if (!imageRef.current) {
         alert("先に画像を選択してください。");
         return;
@@ -248,7 +252,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       }
 
       drawCanvasContent(context, exportCanvas, {
-        includeSafeAreaGuide: false,
+        includeSafeAreaGuide: options.includeSafeAreaGuide,
         includePlaceholder: false,
       });
 

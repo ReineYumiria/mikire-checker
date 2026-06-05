@@ -22,6 +22,7 @@ export default function Home() {
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
   const [showSafeAreaGuide, setShowSafeAreaGuide] = useState(true);
+  const [includeGuideInExport, setIncludeGuideInExport] = useState(false);
 
   const imageCanvasRef = useRef<ImageCanvasHandle | null>(null);
 
@@ -95,9 +96,12 @@ export default function Home() {
       ? imageFileName.replace(/\.[^/.]+$/, "")
       : "mikire-checker";
 
-    const fileName = `${baseName}_${selectedPreset.id}.png`;
+    const guideSuffix = includeGuideInExport ? "_guide" : "";
+    const fileName = `${baseName}_${selectedPreset.id}${guideSuffix}.png`;
 
-    imageCanvasRef.current?.exportPng(fileName);
+    imageCanvasRef.current?.exportPng(fileName, {
+      includeSafeAreaGuide: includeGuideInExport,
+    });
   };
 
   return (
@@ -123,11 +127,13 @@ export default function Home() {
           imageFileName={imageFileName}
           zoom={zoom}
           showSafeAreaGuide={showSafeAreaGuide}
+          includeGuideInExport={includeGuideInExport}
           onImageChange={handleImageChange}
           onServiceChange={handleServiceChange}
           onPresetChange={handlePresetChange}
           onZoomChange={setZoom}
           onShowSafeAreaGuideChange={setShowSafeAreaGuide}
+          onIncludeGuideInExportChange={setIncludeGuideInExport}
           onResetPosition={resetView}
           onExportPng={handleExportPng}
         />
