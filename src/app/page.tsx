@@ -1,8 +1,14 @@
 "use client";
 
-"use client";
+/* eslint-disable @next/next/no-img-element */
 
-import { useEffect, useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent,
+} from "react";
 import { presets } from "@/data/presets";
 
 export default function Home() {
@@ -10,11 +16,15 @@ export default function Home() {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [imageFileName, setImageFileName] = useState<string | null>(null);
   const [zoom, setZoom] = useState(100);
+  const [offsetX, setOffsetX] = useState(0);
+  const [offsetY, setOffsetY] = useState(0);
+
+  const isDraggingRef = useRef(false);
+  const lastPointerXRef = useRef(0);
+  const lastPointerYRef = useRef(0);
 
   const selectedPreset = useMemo(() => {
-    return (
-      presets.find((preset) => preset.id === selectedPresetId) ?? presets[0]
-    );
+    return presets.find((preset) => preset.id === selectedPresetId) ?? presets[0];
   }, [selectedPresetId]);
 
   useEffect(() => {
@@ -44,6 +54,46 @@ export default function Home() {
     const nextImageUrl = URL.createObjectURL(file);
     setImageUrl(nextImageUrl);
     setImageFileName(file.name);
+    setZoom(100);
+    setOffsetX(0);
+    setOffsetY(0);
+  };
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (!imageUrl) {
+      return;
+    }
+
+    isDraggingRef.current = true;
+    lastPointerXRef.current = event.clientX;
+    lastPointerYRef.current = event.clientY;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) {
+      return;
+    }
+
+    const deltaX = event.clientX - lastPointerXRef.current;
+    const deltaY = event.clientY - lastPointerYRef.current;
+
+    setOffsetX((current) => current + deltaX);
+    setOffsetY((current) => current + deltaY);
+
+    lastPointerXRef.current = event.clientX;
+    lastPointerYRef.current = event.clientY;
+  };
+
+  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    isDraggingRef.current = false;
+    event.currentTarget.releasePointerCapture(event.pointerId);
+  };
+
+  const handleResetPosition = () => {
+    setZoom(100);
+    setOffsetX(0);
+    setOffsetY(0);
   };
 
   return (
@@ -109,7 +159,7 @@ export default function Home() {
               <input
                 type="range"
                 min="50"
-                max="200"
+                max="500"
                 value={zoom}
                 onChange={(event) => setZoom(Number(event.target.value))}
                 className="w-full"
@@ -117,13 +167,13 @@ export default function Home() {
               <div className="mt-1 flex justify-between text-xs text-zinc-500">
                 <span>50%</span>
                 <span>{zoom}%</span>
-                <span>200%</span>
+                <span>500%</span>
               </div>
             </div>
 
             <button
               type="button"
-              onClick={() => setZoom(100)}
+              onClick={handleResetPosition}
               className="w-full rounded-lg border border-zinc-700 px-3 py-2 text-sm font-medium text-zinc-200 hover:bg-zinc-800"
             >
               位置をリセット
@@ -151,50 +201,59 @@ export default function Home() {
             </span>
           </div>
 
-          <div
-            className="relative w-full max-w-3xl overflow-hidden rounded-lg border border-zinc-700 bg-zinc-800 shadow-2xl"
-            style={{
-              aspectRatio: `${selectedPreset.outputWidth} / ${selectedPreset.outputHeight}`,
-            }}
-          >
-            {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt={imageFileName ?? "アップロード画像"}
-                className="h-full w-full object-contain will-change-transform"
-                style={{
-                  transform: `scale(${zoom / 100})`,
-                  transformOrigin: "center center",
-                }}
-              />
-            ) : (
-              <div className="absolute inset-0 grid place-items-center text-center">
-                <div>
-                  <p className="text-sm font-medium text-zinc-300">
-                    ここに画像プレビューを表示
-                  </p>
-                  <p className="mt-1 text-xs text-zinc-500">
-                    画像を選択すると、この枠内に表示されます
-                  </p>
+          <div className="flex min-h-[520px] items-center justify-center rounded-xl border border-dashed border-zinc-700 bg-zinc-950 p-6">
+            <div
+              className={`relative w-full max-w-3xl overflow-hidden rounded-lg border border-zinc-700 bg-zinc-800 shadow-2xl ${
+                imageUrl ? "cursor-grab active:cursor-grabbing" : ""
+              }`}
+              style={{
+                aspectRatio: `${selectedPreset.outputWidth} / ${selectedPreset.outputHeight}`,
+              }}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+            >
+              {imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt={imageFileName ?? "アップロード画像"}
+                  draggable={false}
+                  className="h-full w-full select-none object-contain will-change-transform"
+                  style={{
+                    transform: `translate(${offsetX}px, ${offsetY}px) scale(${zoom / 100})`,
+                    transformOrigin: "center center",
+                  }}
+                />
+              ) : (
+                <div className="absolute inset-0 grid place-items-center text-center">
+                  <div>
+                    <p className="text-sm font-medium text-zinc-300">
+                      ここに画像プレビューを表示
+                    </p>
+                    <p className="mt-1 text-xs text-zinc-500">
+                      画像を選択すると、この枠内に表示されます
+                    </p>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {selectedPreset.safeArea && (
-              <div
-                className="pointer-events-none absolute border-2 border-sky-400 bg-sky-400/10"
-                style={{
-                  left: `${(selectedPreset.safeArea.x / selectedPreset.outputWidth) * 100}%`,
-                  top: `${(selectedPreset.safeArea.y / selectedPreset.outputHeight) * 100}%`,
-                  width: `${(selectedPreset.safeArea.width / selectedPreset.outputWidth) * 100}%`,
-                  height: `${(selectedPreset.safeArea.height / selectedPreset.outputHeight) * 100}%`,
-                }}
-              >
-                <div className="absolute left-2 top-2 rounded bg-sky-400 px-2 py-1 text-xs font-semibold text-zinc-950">
-                  SAFE AREA
+              {selectedPreset.safeArea && (
+                <div
+                  className="pointer-events-none absolute border-2 border-sky-400 bg-sky-400/10"
+                  style={{
+                    left: `${(selectedPreset.safeArea.x / selectedPreset.outputWidth) * 100}%`,
+                    top: `${(selectedPreset.safeArea.y / selectedPreset.outputHeight) * 100}%`,
+                    width: `${(selectedPreset.safeArea.width / selectedPreset.outputWidth) * 100}%`,
+                    height: `${(selectedPreset.safeArea.height / selectedPreset.outputHeight) * 100}%`,
+                  }}
+                >
+                  <div className="absolute left-2 top-2 rounded bg-sky-400 px-2 py-1 text-xs font-semibold text-zinc-950">
+                    SAFE AREA
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </section>
 
