@@ -25,6 +25,7 @@ export const presets: Preset[] = [
       width: 1546,
       height: 423,
     },
+    guideShape: "rect",
     description:
       "端末によって表示範囲が大きく変わるため、安全領域の確認が重要な画像です。",
     notes: [
@@ -44,11 +45,12 @@ export const presets: Preset[] = [
       width: 640,
       height: 640,
     },
+    guideShape: "circle",
     description:
       "YouTubeチャンネルのプロフィール画像向けプリセットです。円形表示で見切れやすい外周を確認します。",
     notes: [
       "実際の表示は小さくなるため、顔・ロゴ・文字は中央に大きめに配置するのがおすすめです。",
-      "水色枠は円形トリミングを想定した安全目安です。外周に重要要素を置きすぎないようにしてください。",
+      "丸アイコン表示を想定して、四隅や外周には重要な情報を置かない方が安全です。",
     ],
   },
   {
@@ -63,6 +65,7 @@ export const presets: Preset[] = [
       width: 1200,
       height: 340,
     },
+    guideShape: "rect",
     description:
       "X（旧Twitter）プロフィール上部に表示されるヘッダー画像です。端や左下付近の見切れに注意します。",
     notes: [
@@ -83,6 +86,7 @@ export const presets: Preset[] = [
       width: 320,
       height: 320,
     },
+    guideShape: "circle",
     description:
       "X（旧Twitter）のプロフィール画像向けプリセットです。円形表示で外周が見切れやすいため、中央配置を確認します。",
     notes: [
@@ -128,6 +132,7 @@ export const presets: Preset[] = [
       width: 768,
       height: 396,
     },
+    guideShape: "rect",
     description:
       "Discordサーバーのバナー画像向けプリセットです。16:9画像として表示確認します。",
     notes: [
@@ -147,6 +152,7 @@ export const presets: Preset[] = [
       width: 410,
       height: 410,
     },
+    guideShape: "circle",
     description:
       "Discordサーバーアイコン向けプリセットです。円形表示を想定して、四隅や外周の見切れを確認します。",
     notes: [
@@ -166,6 +172,7 @@ export const presets: Preset[] = [
       width: 772,
       height: 344,
     },
+    guideShape: "rect",
     description:
       "Steamストアページなどで使われるヘッダーカプセル画像向けプリセットです。",
     notes: [
@@ -185,6 +192,7 @@ export const presets: Preset[] = [
       width: 388,
       height: 140,
     },
+    guideShape: "rect",
     description:
       "Steamの小さめ表示に使われるスモールカプセル画像向けプリセットです。",
     notes: [
@@ -204,6 +212,7 @@ export const presets: Preset[] = [
       width: 1036,
       height: 564,
     },
+    guideShape: "rect",
     description:
       "Steamストア上で大きく表示されるメインカプセル画像向けプリセットです。",
     notes: [
@@ -223,6 +232,7 @@ export const presets: Preset[] = [
       width: 628,
       height: 716,
     },
+    guideShape: "rect",
     description:
       "Steamの縦長表示で使われる縦型カプセル画像向けプリセットです。",
     notes: [
@@ -242,6 +252,7 @@ export const presets: Preset[] = [
       width: 148,
       height: 148,
     },
+    guideShape: "circle",
     description:
       "Steamプロフィールのアバター向けプリセットです。小さく表示されるため、可読性と中央配置を確認します。",
     notes: [
@@ -261,6 +272,7 @@ export const presets: Preset[] = [
       width: 1024,
       height: 536,
     },
+    guideShape: "rect",
     description:
       "noteの記事見出し画像向けプリセットです。横長のアイキャッチ画像として確認します。",
     notes: [
@@ -280,6 +292,7 @@ export const presets: Preset[] = [
       width: 1536,
       height: 324,
     },
+    guideShape: "rect",
     description:
       "noteのクリエイターページやマガジンヘッダー向けプリセットです。中央部分の見切れ確認に使います。",
     notes: [
@@ -300,6 +313,7 @@ export const presets: Preset[] = [
       width: 400,
       height: 400,
     },
+    guideShape: "circle",
     description:
       "noteプロフィールアイコン向けプリセットです。円形表示を想定して、中央配置と外周の見切れを確認します。",
     notes: [

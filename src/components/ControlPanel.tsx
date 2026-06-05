@@ -1,12 +1,15 @@
 import type { Preset } from "@/types/preset";
 
 type ControlPanelProps = {
+  services: string[];
   presets: Preset[];
+  selectedService: string;
   selectedPresetId: string;
   imageUrl: string | null;
   imageFileName: string | null;
   zoom: number;
   onImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onServiceChange: (service: string) => void;
   onPresetChange: (presetId: string) => void;
   onZoomChange: (zoom: number) => void;
   onResetPosition: () => void;
@@ -14,12 +17,15 @@ type ControlPanelProps = {
 };
 
 export function ControlPanel({
+  services,
   presets,
+  selectedService,
   selectedPresetId,
   imageUrl,
   imageFileName,
   zoom,
   onImageChange,
+  onServiceChange,
   onPresetChange,
   onZoomChange,
   onResetPosition,
@@ -51,7 +57,24 @@ export function ControlPanel({
 
         <div>
           <label className="mb-2 block text-sm font-medium text-zinc-300">
-            プリセット
+            対象サービス
+          </label>
+          <select
+            value={selectedService}
+            onChange={(event) => onServiceChange(event.target.value)}
+            className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none focus:border-sky-500"
+          >
+            {services.map((service) => (
+              <option key={service} value={service}>
+                {service}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-medium text-zinc-300">
+            用途プリセット
           </label>
           <select
             value={selectedPresetId}
@@ -60,7 +83,7 @@ export function ControlPanel({
           >
             {presets.map((preset) => (
               <option key={preset.id} value={preset.id}>
-                {preset.service} / {preset.name}
+                {preset.name}
               </option>
             ))}
           </select>

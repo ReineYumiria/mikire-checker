@@ -10,6 +10,11 @@ import { PresetInfoPanel } from "@/components/PresetInfoPanel";
 import { presets } from "@/data/presets";
 
 export default function Home() {
+  const services = useMemo(() => {
+    return Array.from(new Set(presets.map((preset) => preset.service)));
+  }, []);
+
+  const [selectedService, setSelectedService] = useState(services[0]);
   const [selectedPresetId, setSelectedPresetId] = useState(presets[0].id);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [imageFileName, setImageFileName] = useState<string | null>(null);
@@ -19,9 +24,17 @@ export default function Home() {
 
   const imageCanvasRef = useRef<ImageCanvasHandle | null>(null);
 
+  const servicePresets = useMemo(() => {
+    return presets.filter((preset) => preset.service === selectedService);
+  }, [selectedService]);
+
   const selectedPreset = useMemo(() => {
-    return presets.find((preset) => preset.id === selectedPresetId) ?? presets[0];
-  }, [selectedPresetId]);
+    return (
+      presets.find((preset) => preset.id === selectedPresetId) ??
+      servicePresets[0] ??
+      presets[0]
+    );
+  }, [selectedPresetId, servicePresets]);
 
   useEffect(() => {
     return () => {
@@ -30,6 +43,12 @@ export default function Home() {
       }
     };
   }, [imageUrl]);
+
+  const resetView = () => {
+    setZoom(100);
+    setOffsetX(0);
+    setOffsetY(0);
+  };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -50,22 +69,24 @@ export default function Home() {
     const nextImageUrl = URL.createObjectURL(file);
     setImageUrl(nextImageUrl);
     setImageFileName(file.name);
-    setZoom(100);
-    setOffsetX(0);
-    setOffsetY(0);
+    resetView();
+  };
+
+  const handleServiceChange = (service: string) => {
+    const nextPreset = presets.find((preset) => preset.service === service);
+
+    if (!nextPreset) {
+      return;
+    }
+
+    setSelectedService(service);
+    setSelectedPresetId(nextPreset.id);
+    resetView();
   };
 
   const handlePresetChange = (presetId: string) => {
     setSelectedPresetId(presetId);
-    setZoom(100);
-    setOffsetX(0);
-    setOffsetY(0);
-  };
-
-  const handleResetPosition = () => {
-    setZoom(100);
-    setOffsetX(0);
-    setOffsetY(0);
+    resetView();
   };
 
   const handleExportPng = () => {
@@ -93,15 +114,18 @@ export default function Home() {
 
       <div className="mx-auto grid max-w-7xl gap-4 px-6 py-6 lg:grid-cols-[280px_1fr_320px]">
         <ControlPanel
-          presets={presets}
+          services={services}
+          presets={servicePresets}
+          selectedService={selectedService}
           selectedPresetId={selectedPresetId}
           imageUrl={imageUrl}
           imageFileName={imageFileName}
           zoom={zoom}
           onImageChange={handleImageChange}
+          onServiceChange={handleServiceChange}
           onPresetChange={handlePresetChange}
           onZoomChange={setZoom}
-          onResetPosition={handleResetPosition}
+          onResetPosition={resetView}
           onExportPng={handleExportPng}
         />
 

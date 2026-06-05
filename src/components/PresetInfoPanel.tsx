@@ -5,6 +5,9 @@ type PresetInfoPanelProps = {
 };
 
 export function PresetInfoPanel({ preset }: PresetInfoPanelProps) {
+  const safeAreaShapeLabel =
+    preset.guideShape === "circle" ? "水色の円内" : "水色の枠内";
+
   return (
     <aside className="rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
       <h2 className="mb-4 text-lg font-semibold">プリセット情報</h2>
@@ -34,7 +37,7 @@ export function PresetInfoPanel({ preset }: PresetInfoPanelProps) {
             </div>
 
             <div className="rounded-lg border border-zinc-700 bg-zinc-950 p-3 text-sm leading-6 text-zinc-300">
-              <p>水色の枠内が安全領域です。</p>
+              <p>{safeAreaShapeLabel}が安全領域です。</p>
               <p className="mt-1">
                 暗く表示される部分は、見切れや非推奨表示になりやすい領域です。
               </p>

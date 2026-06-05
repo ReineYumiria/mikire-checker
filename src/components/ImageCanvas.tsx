@@ -170,10 +170,28 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         return;
       }
 
+      const guideShape = preset.guideShape ?? "rect";
       const { x, y, width, height } = preset.safeArea;
 
       context.save();
 
+      if (guideShape === "circle") {
+        drawCircleSafeArea(context, canvas, x, y, width, height);
+      } else {
+        drawRectSafeArea(context, canvas, x, y, width, height);
+      }
+
+      context.restore();
+    };
+
+    const drawRectSafeArea = (
+      context: CanvasRenderingContext2D,
+      canvas: HTMLCanvasElement,
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+    ) => {
       context.fillStyle = "rgba(0, 0, 0, 0.42)";
       context.beginPath();
       context.rect(0, 0, canvas.width, canvas.height);
@@ -183,8 +201,31 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       context.strokeStyle = "#38bdf8";
       context.lineWidth = Math.max(4, canvas.width / 400);
       context.strokeRect(x, y, width, height);
+    };
 
-      context.restore();
+    const drawCircleSafeArea = (
+      context: CanvasRenderingContext2D,
+      canvas: HTMLCanvasElement,
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+    ) => {
+      const centerX = x + width / 2;
+      const centerY = y + height / 2;
+      const radius = Math.min(width, height) / 2;
+
+      context.fillStyle = "rgba(0, 0, 0, 0.42)";
+      context.beginPath();
+      context.rect(0, 0, canvas.width, canvas.height);
+      context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      context.fill("evenodd");
+
+      context.strokeStyle = "#38bdf8";
+      context.lineWidth = Math.max(4, canvas.width / 400);
+      context.beginPath();
+      context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      context.stroke();
     };
 
     const exportPng = (fileName: string) => {

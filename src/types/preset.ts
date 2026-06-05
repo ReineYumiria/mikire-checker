@@ -1,3 +1,5 @@
+export type GuideShape = "rect" | "circle";
+
 export type SafeArea = {
   x: number;
   y: number;
@@ -12,6 +14,7 @@ export type Preset = {
   outputWidth: number;
   outputHeight: number;
   safeArea?: SafeArea;
+  guideShape?: GuideShape;
   description: string;
   notes?: string[];
 };
