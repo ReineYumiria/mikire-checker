@@ -112,7 +112,7 @@ export default function Home() {
             見切れチェッカー
           </h1>
           <p className="text-sm text-zinc-400">
-            画像はサーバーに送信されず、ブラウザ内だけで処理します。
+            画像はサーバーに送信されず、ブラウザ内だけで処理されます。
           </p>
         </div>
       </header>
