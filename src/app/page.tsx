@@ -1,14 +1,7 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
-
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type PointerEvent,
-} from "react";
+import { useEffect, useMemo, useState } from "react";
+import { ImageCanvas } from "@/components/ImageCanvas";
 import { presets } from "@/data/presets";
 
 export default function Home() {
@@ -18,10 +11,6 @@ export default function Home() {
   const [zoom, setZoom] = useState(100);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
-
-  const isDraggingRef = useRef(false);
-  const lastPointerXRef = useRef(0);
-  const lastPointerYRef = useRef(0);
 
   const selectedPreset = useMemo(() => {
     return presets.find((preset) => preset.id === selectedPresetId) ?? presets[0];
@@ -57,37 +46,6 @@ export default function Home() {
     setZoom(100);
     setOffsetX(0);
     setOffsetY(0);
-  };
-
-  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
-    if (!imageUrl) {
-      return;
-    }
-
-    isDraggingRef.current = true;
-    lastPointerXRef.current = event.clientX;
-    lastPointerYRef.current = event.clientY;
-    event.currentTarget.setPointerCapture(event.pointerId);
-  };
-
-  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
-    if (!isDraggingRef.current) {
-      return;
-    }
-
-    const deltaX = event.clientX - lastPointerXRef.current;
-    const deltaY = event.clientY - lastPointerYRef.current;
-
-    setOffsetX((current) => current + deltaX);
-    setOffsetY((current) => current + deltaY);
-
-    lastPointerXRef.current = event.clientX;
-    lastPointerYRef.current = event.clientY;
-  };
-
-  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
-    isDraggingRef.current = false;
-    event.currentTarget.releasePointerCapture(event.pointerId);
   };
 
   const handleResetPosition = () => {
@@ -202,58 +160,16 @@ export default function Home() {
           </div>
 
           <div className="flex min-h-[520px] items-center justify-center rounded-xl border border-dashed border-zinc-700 bg-zinc-950 p-6">
-            <div
-              className={`relative w-full max-w-3xl overflow-hidden rounded-lg border border-zinc-700 bg-zinc-800 shadow-2xl ${
-                imageUrl ? "cursor-grab active:cursor-grabbing" : ""
-              }`}
-              style={{
-                aspectRatio: `${selectedPreset.outputWidth} / ${selectedPreset.outputHeight}`,
-              }}
-              onPointerDown={handlePointerDown}
-              onPointerMove={handlePointerMove}
-              onPointerUp={handlePointerUp}
-              onPointerCancel={handlePointerUp}
-            >
-              {imageUrl ? (
-                <img
-                  src={imageUrl}
-                  alt={imageFileName ?? "アップロード画像"}
-                  draggable={false}
-                  className="h-full w-full select-none object-contain will-change-transform"
-                  style={{
-                    transform: `translate(${offsetX}px, ${offsetY}px) scale(${zoom / 100})`,
-                    transformOrigin: "center center",
-                  }}
-                />
-              ) : (
-                <div className="absolute inset-0 grid place-items-center text-center">
-                  <div>
-                    <p className="text-sm font-medium text-zinc-300">
-                      ここに画像プレビューを表示
-                    </p>
-                    <p className="mt-1 text-xs text-zinc-500">
-                      画像を選択すると、この枠内に表示されます
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {selectedPreset.safeArea && (
-                <div
-                  className="pointer-events-none absolute border-2 border-sky-400 bg-sky-400/10"
-                  style={{
-                    left: `${(selectedPreset.safeArea.x / selectedPreset.outputWidth) * 100}%`,
-                    top: `${(selectedPreset.safeArea.y / selectedPreset.outputHeight) * 100}%`,
-                    width: `${(selectedPreset.safeArea.width / selectedPreset.outputWidth) * 100}%`,
-                    height: `${(selectedPreset.safeArea.height / selectedPreset.outputHeight) * 100}%`,
-                  }}
-                >
-                  <div className="absolute left-2 top-2 rounded bg-sky-400 px-2 py-1 text-xs font-semibold text-zinc-950">
-                    SAFE AREA
-                  </div>
-                </div>
-              )}
-            </div>
+            <ImageCanvas
+              preset={selectedPreset}
+              imageUrl={imageUrl}
+              imageFileName={imageFileName}
+              zoom={zoom}
+              offsetX={offsetX}
+              offsetY={offsetY}
+              setOffsetX={setOffsetX}
+              setOffsetY={setOffsetY}
+            />
           </div>
         </section>
 
