@@ -21,6 +21,7 @@ export default function Home() {
   const [zoom, setZoom] = useState(100);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
+  const [showSafeAreaGuide, setShowSafeAreaGuide] = useState(true);
 
   const imageCanvasRef = useRef<ImageCanvasHandle | null>(null);
 
@@ -121,10 +122,12 @@ export default function Home() {
           imageUrl={imageUrl}
           imageFileName={imageFileName}
           zoom={zoom}
+          showSafeAreaGuide={showSafeAreaGuide}
           onImageChange={handleImageChange}
           onServiceChange={handleServiceChange}
           onPresetChange={handlePresetChange}
           onZoomChange={setZoom}
+          onShowSafeAreaGuideChange={setShowSafeAreaGuide}
           onResetPosition={resetView}
           onExportPng={handleExportPng}
         />
@@ -151,6 +154,7 @@ export default function Home() {
               zoom={zoom}
               offsetX={offsetX}
               offsetY={offsetY}
+              showSafeAreaGuide={showSafeAreaGuide}
               setZoom={setZoom}
               setOffsetX={setOffsetX}
               setOffsetY={setOffsetY}

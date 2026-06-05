@@ -23,6 +23,7 @@ type ImageCanvasProps = {
   zoom: number;
   offsetX: number;
   offsetY: number;
+  showSafeAreaGuide: boolean;
   setZoom: Dispatch<SetStateAction<number>>;
   setOffsetX: Dispatch<SetStateAction<number>>;
   setOffsetY: Dispatch<SetStateAction<number>>;
@@ -41,6 +42,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       zoom,
       offsetX,
       offsetY,
+      showSafeAreaGuide,
       setZoom,
       setOffsetX,
       setOffsetY,
@@ -85,7 +87,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
     useEffect(() => {
       drawCanvas();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [preset, zoom, offsetX, offsetY, imageFileName]);
+    }, [preset, zoom, offsetX, offsetY, imageFileName, showSafeAreaGuide]);
 
     const drawCanvas = () => {
       const canvas = canvasRef.current;
@@ -104,7 +106,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       canvas.height = preset.outputHeight;
 
       drawCanvasContent(context, canvas, {
-        includeSafeAreaGuide: true,
+        includeSafeAreaGuide: showSafeAreaGuide,
         includePlaceholder: true,
       });
     };
