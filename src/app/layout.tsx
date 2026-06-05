@@ -13,9 +13,34 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mikire-checker.vercel.app"),
   title: "見切れチェッカー｜画像の表示範囲・安全領域確認ツール",
   description:
-    "画像をアップロードして、YouTube、Twitter、Discord、noteなどの表示範囲や安全領域をブラウザ内で確認できるWebツールです。",
+    "画像をアップロードして、YouTube、X（旧Twitter）、Discord、noteなどの表示範囲や安全領域をブラウザ内で確認できるWebツールです。",
+  openGraph: {
+    title: "見切れチェッカー｜画像の表示範囲・安全領域確認ツール",
+    description:
+      "画像をアップロードして、YouTube、X（旧Twitter）、Discord、noteなどの表示範囲や安全領域をブラウザ内で確認できるWebツールです。",
+    url: "https://mikire-checker.vercel.app",
+    siteName: "見切れチェッカー",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "見切れチェッカー",
+      },
+    ],
+    locale: "ja_JP",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "見切れチェッカー｜画像の表示範囲・安全領域確認ツール",
+    description:
+      "画像をアップロードして、YouTube、X（旧Twitter）、Discord、noteなどの表示範囲や安全領域をブラウザ内で確認できるWebツールです。",
+    images: ["/twitter-image.png"],
+  },
 };
 
 export default function RootLayout({
