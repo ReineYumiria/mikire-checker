@@ -58,6 +58,14 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
     const isDraggingRef = useRef(false);
     const lastPointerXRef = useRef(0);
     const lastPointerYRef = useRef(0);
+    const activePointersRef = useRef(
+      new Map<number, { clientX: number; clientY: number }>(),
+    );
+    const pinchStartDistanceRef = useRef<number | null>(null);
+    const pinchStartZoomRef = useRef(zoom);
+    const pinchStartOffsetXRef = useRef(0);
+    const pinchStartOffsetYRef = useRef(0);
+    const pinchCenterPointRef = useRef({ x: 0, y: 0 });
 
     useImperativeHandle(ref, () => ({
       exportPng: (fileName: string, options: ExportPngOptions) => {
@@ -288,7 +296,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       };
     };
 
-    const getCanvasPoint = (event: WheelEvent<HTMLCanvasElement>) => {
+    const getCanvasPointFromClient = (clientX: number, clientY: number) => {
       const canvas = canvasRef.current;
 
       if (!canvas) {
@@ -302,8 +310,28 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       const { scaleX, scaleY } = getCanvasScale();
 
       return {
-        x: (event.clientX - rect.left) * scaleX,
-        y: (event.clientY - rect.top) * scaleY,
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY,
+      };
+    };
+
+    const getPointerDistance = (
+      first: { clientX: number; clientY: number },
+      second: { clientX: number; clientY: number },
+    ) => {
+      return Math.hypot(
+        first.clientX - second.clientX,
+        first.clientY - second.clientY,
+      );
+    };
+
+    const getPointerCenter = (
+      first: { clientX: number; clientY: number },
+      second: { clientX: number; clientY: number },
+    ) => {
+      return {
+        clientX: (first.clientX + second.clientX) / 2,
+        clientY: (first.clientY + second.clientY) / 2,
       };
     };
 
@@ -324,7 +352,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         return;
       }
 
-      const point = getCanvasPoint(event);
+      const point = getCanvasPointFromClient(event.clientX, event.clientY);
       const zoomRatio = nextZoom / zoom;
 
       const canvasCenterX = preset.outputWidth / 2;
@@ -338,18 +366,109 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       setZoom(nextZoom);
     };
 
+    const startPinchZoom = () => {
+      const pointers = Array.from(activePointersRef.current.values());
+
+      if (pointers.length < 2) {
+        return;
+      }
+
+      const [firstPointer, secondPointer] = pointers;
+      const center = getPointerCenter(firstPointer, secondPointer);
+      const centerPoint = getCanvasPointFromClient(
+        center.clientX,
+        center.clientY,
+      );
+
+      pinchStartDistanceRef.current = getPointerDistance(
+        firstPointer,
+        secondPointer,
+      );
+      pinchStartZoomRef.current = zoom;
+      pinchStartOffsetXRef.current = offsetX;
+      pinchStartOffsetYRef.current = offsetY;
+      pinchCenterPointRef.current = centerPoint;
+    };
+
     const handlePointerDown = (event: PointerEvent<HTMLCanvasElement>) => {
       if (!imageUrl) {
         return;
       }
 
-      isDraggingRef.current = true;
-      lastPointerXRef.current = event.clientX;
-      lastPointerYRef.current = event.clientY;
+      activePointersRef.current.set(event.pointerId, {
+        clientX: event.clientX,
+        clientY: event.clientY,
+      });
+
       event.currentTarget.setPointerCapture(event.pointerId);
+
+      if (activePointersRef.current.size === 1) {
+        isDraggingRef.current = true;
+        lastPointerXRef.current = event.clientX;
+        lastPointerYRef.current = event.clientY;
+        return;
+      }
+
+      if (activePointersRef.current.size === 2) {
+        isDraggingRef.current = false;
+        startPinchZoom();
+      }
     };
 
     const handlePointerMove = (event: PointerEvent<HTMLCanvasElement>) => {
+      if (!imageUrl) {
+        return;
+      }
+
+      const pointer = activePointersRef.current.get(event.pointerId);
+
+      if (!pointer) {
+        return;
+      }
+
+      activePointersRef.current.set(event.pointerId, {
+        clientX: event.clientX,
+        clientY: event.clientY,
+      });
+
+      if (activePointersRef.current.size >= 2) {
+        const pointers = Array.from(activePointersRef.current.values());
+        const [firstPointer, secondPointer] = pointers;
+
+        const startDistance = pinchStartDistanceRef.current;
+
+        if (!startDistance || startDistance <= 0) {
+          startPinchZoom();
+          return;
+        }
+
+        const currentDistance = getPointerDistance(firstPointer, secondPointer);
+        const nextZoom = Math.min(
+          MAX_ZOOM,
+          Math.max(
+            MIN_ZOOM,
+            pinchStartZoomRef.current * (currentDistance / startDistance),
+          ),
+        );
+
+        const zoomRatio = nextZoom / pinchStartZoomRef.current;
+        const point = pinchCenterPointRef.current;
+
+        const canvasCenterX = preset.outputWidth / 2;
+        const canvasCenterY = preset.outputHeight / 2;
+
+        const relativeX =
+          point.x - canvasCenterX - pinchStartOffsetXRef.current;
+        const relativeY =
+          point.y - canvasCenterY - pinchStartOffsetYRef.current;
+
+        setOffsetX(point.x - canvasCenterX - relativeX * zoomRatio);
+        setOffsetY(point.y - canvasCenterY - relativeY * zoomRatio);
+        setZoom(Math.round(nextZoom));
+
+        return;
+      }
+
       if (!isDraggingRef.current) {
         return;
       }
@@ -367,8 +486,28 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
     };
 
     const handlePointerUp = (event: PointerEvent<HTMLCanvasElement>) => {
+      activePointersRef.current.delete(event.pointerId);
+
+      try {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      } catch {
+        // Pointer capture may already be released.
+      }
+
+      pinchStartDistanceRef.current = null;
+
+      if (activePointersRef.current.size === 1) {
+        const [remainingPointer] = Array.from(
+          activePointersRef.current.values(),
+        );
+
+        isDraggingRef.current = true;
+        lastPointerXRef.current = remainingPointer.clientX;
+        lastPointerYRef.current = remainingPointer.clientY;
+        return;
+      }
+
       isDraggingRef.current = false;
-      event.currentTarget.releasePointerCapture(event.pointerId);
     };
 
     return (
@@ -380,6 +519,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         }`}
         style={{
           aspectRatio: `${preset.outputWidth} / ${preset.outputHeight}`,
+          touchAction: "none",
         }}
         onWheel={handleWheel}
         onPointerDown={handlePointerDown}
