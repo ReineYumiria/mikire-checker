@@ -169,8 +169,32 @@ export default function Home() {
           </div>
         </section>
 
-        <PresetInfoPanel preset={selectedPreset} />
+                <PresetInfoPanel preset={selectedPreset} />
       </div>
+
+      <footer className="border-t border-zinc-800 px-6 py-4 text-center text-xs text-zinc-500">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-3">
+          <a
+            href="https://github.com/ReineYumiria/mikire-checker"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-zinc-300"
+          >
+            GitHub
+          </a>
+          <span>/</span>
+          <a
+            href="https://github.com/ReineYumiria/mikire-checker/blob/master/PRIVACY.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-zinc-300"
+          >
+            プライバシーポリシー
+          </a>
+          <span>/</span>
+          <span>画像はブラウザ内で処理されます</span>
+        </div>
+      </footer>
     </main>
   );
 }
