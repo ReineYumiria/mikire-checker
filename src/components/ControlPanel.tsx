@@ -104,7 +104,7 @@ export function ControlPanel({
           <input
             type="range"
             min="50"
-            max="500"
+            max="1000"
             value={zoom}
             onChange={(event) => onZoomChange(Number(event.target.value))}
             className="w-full"
@@ -112,7 +112,7 @@ export function ControlPanel({
           <div className="mt-1 flex justify-between text-xs text-zinc-500">
             <span>50%</span>
             <span>{zoom}%</span>
-            <span>500%</span>
+            <span>1000%</span>
           </div>
         </div>
 

@@ -34,7 +34,7 @@ type ImageCanvasProps = {
 };
 
 const MIN_ZOOM = 50;
-const MAX_ZOOM = 500;
+const MAX_ZOOM = 1000;
 const WHEEL_ZOOM_STEP = 10;
 
 export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
