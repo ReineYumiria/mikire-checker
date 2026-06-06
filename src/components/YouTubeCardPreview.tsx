@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import type { Preset } from "@/types/preset";
 
 type YouTubeCardPreviewProps = {
@@ -24,32 +24,7 @@ export function YouTubeCardPreview({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
 
-  useEffect(() => {
-    if (!imageUrl) {
-      imageRef.current = null;
-      draw();
-      return;
-    }
-
-    const image = new Image();
-    image.src = imageUrl;
-    image.onload = () => {
-      imageRef.current = image;
-      draw();
-    };
-    image.onerror = () => {
-      imageRef.current = null;
-      draw();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageUrl]);
-
-  useEffect(() => {
-    draw();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [zoom, offsetX, offsetY, preset]);
-
-  const draw = () => {
+  const draw = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -78,7 +53,32 @@ export function YouTubeCardPreview({
     const drawY = (outputHeight - drawHeight) / 2 + offsetY;
 
     ctx.drawImage(image, drawX, drawY, drawWidth, drawHeight);
-  };
+  }, [zoom, offsetX, offsetY, preset]);
+
+  useEffect(() => {
+    if (!imageUrl) {
+      imageRef.current = null;
+      draw();
+      return;
+    }
+
+    const image = new Image();
+    image.src = imageUrl;
+    image.onload = () => {
+      imageRef.current = image;
+      draw();
+    };
+    image.onerror = () => {
+      imageRef.current = null;
+      draw();
+    };
+    // draw は imageUrl 変化時の画像ロードのみをトリガーとするため依存から除外
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageUrl]);
+
+  useEffect(() => {
+    draw();
+  }, [draw]);
 
   return (
     <div className="mt-4 border-t border-zinc-800 pt-4">
