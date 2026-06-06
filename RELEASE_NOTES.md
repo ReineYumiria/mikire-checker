@@ -1,5 +1,28 @@
 # Release Notes
 
+## v1.7.0（2026-06-06）
+
+見切れチェッカー v1.7.0 では、Google AdSense 実広告導入前の構成準備を行いました。
+
+### 追加・更新内容
+
+- `AdSlot` コンポーネントを新規追加（`src/components/AdSlot.tsx`）
+  - 環境変数による広告 ON / OFF 設計を実装
+  - 参照する環境変数：`NEXT_PUBLIC_ADSENSE_ENABLED` / `NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT` / `NEXT_PUBLIC_AD_SLOT_SIDEBAR` / `NEXT_PUBLIC_AD_SLOT_FOOTER`
+  - 広告表示条件：本番環境 かつ `NEXT_PUBLIC_ADSENSE_ENABLED=true` かつ各変数が設定済みの場合のみ
+  - 条件を満たさない場合は既存の `AdPlaceholder` を表示（開発環境・環境変数未設定時は常にプレースホルダー）
+- `page.tsx` の広告枠を `AdPlaceholder` から `AdSlot` に差し替え
+  - 右カラム下部広告枠：`slotId={process.env.NEXT_PUBLIC_AD_SLOT_SIDEBAR}`
+  - ページ下部広告枠：`slotId={process.env.NEXT_PUBLIC_AD_SLOT_FOOTER}`
+
+### 補足
+
+- v1.7.0 では AdSense script・ads.txt・実広告スロット ID は未導入です。
+- 環境変数を設定しない限り、デプロイ後も引き続きプレースホルダー表示になります。
+- `AdPlaceholder` コンポーネントは変更・削除せず、`AdSlot` の内部フォールバックとして利用しています。
+- v1.6 の SEO 基盤（sitemap / robots）および既存ツール機能には影響なし。
+- Canvas 描画・画像処理・PNG 書き出し処理は変更なし。
+
 ## v1.6.0（2026-06-06）
 
 見切れチェッカー v1.6.0 では、AdSense申請前・検索流入向けのSEO基盤整備を行いました。

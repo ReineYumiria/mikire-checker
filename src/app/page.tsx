@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
 import { ImageCanvas, type ImageCanvasHandle } from "@/components/ImageCanvas";
-import { AdPlaceholder } from "@/components/AdPlaceholder";
+import { AdSlot } from "@/components/AdSlot";
 import { PresetInfoPanel } from "@/components/PresetInfoPanel";
 import { YouTubeCardPreview } from "@/components/YouTubeCardPreview";
 import { presets, serviceCategories } from "@/data/presets";
@@ -204,14 +204,19 @@ export default function Home() {
 
         <div className="flex flex-col gap-4">
           <PresetInfoPanel preset={selectedPreset} />
-          <AdPlaceholder className="h-[250px] w-full" />
+          <AdSlot
+            slotId={process.env.NEXT_PUBLIC_AD_SLOT_SIDEBAR}
+            className="h-[250px] w-full"
+            label="広告枠（右カラムプレースホルダー）"
+          />
         </div>
       </div>
 
       <div className="mx-auto max-w-7xl px-6 py-4">
-        <AdPlaceholder
-          label="広告枠（ページ下部プレースホルダー）"
+        <AdSlot
+          slotId={process.env.NEXT_PUBLIC_AD_SLOT_FOOTER}
           className="h-[90px] w-full"
+          label="広告枠（ページ下部プレースホルダー）"
         />
       </div>
 
