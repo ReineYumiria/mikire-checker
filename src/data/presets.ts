@@ -859,13 +859,95 @@ export const presets: Preset[] = [
       "丸い枠に合わせて表示されるため、顔・ロゴ・文字は中央寄りに配置するのがおすすめです。",
     ],
   },
+  {
+    id: "bluesky-profile-image",
+    service: "Bluesky",
+    name: "プロフィール画像",
+    outputWidth: 400,
+    outputHeight: 400,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 400,
+      height: 400,
+    },
+    guideShape: "circle",
+    description:
+      "Blueskyのプロフィール画像用。表示時は円形にトリミングされるため、中央に重要な要素を置く想定。",
+    notes: [
+      "表示環境によって見え方が変わる場合があります。",
+      "顔やロゴなど重要な要素は中央寄せにしてください。",
+    ],
+  },
+  {
+    id: "bluesky-header",
+    service: "Bluesky",
+    name: "ヘッダー画像",
+    outputWidth: 1500,
+    outputHeight: 500,
+    description:
+      "Blueskyのプロフィールヘッダー画像用。横長3:1の目安。",
+    notes: [
+      "表示環境によって上下左右が一部見切れる場合があります。",
+      "重要な文字や顔は中央寄せにしてください。",
+    ],
+  },
+  {
+    id: "bluesky-post-16-9",
+    service: "Bluesky",
+    name: "投稿画像（16:9）",
+    outputWidth: 1200,
+    outputHeight: 675,
+    description:
+      "Bluesky投稿画像の16:9目安。タイムライン上での見切れ確認向け。",
+    notes: [
+      "Blueskyの投稿画像は複数の比率を扱えるため、これは代表的な16:9目安です。",
+      "重要な要素は中央寄せにしてください。",
+    ],
+  },
+  {
+    id: "misskey-icon",
+    service: "Misskey",
+    name: "アイコン",
+    outputWidth: 1000,
+    outputHeight: 1000,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 1000,
+      height: 1000,
+    },
+    guideShape: "circle",
+    description:
+      "Misskey系サービスのアイコン用目安。円形表示される場面を想定。",
+    notes: [
+      "Misskeyはインスタンスやテーマによって表示が異なる場合があります。",
+      "これはMisskey系サービス向けの目安プリセットです。",
+      "顔やロゴなど重要な要素は中央寄せにしてください。",
+    ],
+  },
+  {
+    id: "misskey-banner",
+    service: "Misskey",
+    name: "バナー",
+    outputWidth: 1500,
+    outputHeight: 500,
+    description:
+      "Misskey系サービスのプロフィールバナー用目安。",
+    notes: [
+      "Misskeyはインスタンスやテーマによって表示が異なる場合があります。",
+      "これはMisskey系サービス向けの目安プリセットです。",
+      "重要な文字や顔は中央寄せにしてください。",
+    ],
+  },
 ];
 
 export const serviceCategories: Record<string, string> = {
   "X（旧Twitter）": "SNS",
   Instagram: "SNS",
   TikTok: "SNS",
-  // Bluesky / Misskey をここに追加予定
+  Bluesky: "SNS",
+  Misskey: "SNS",
   YouTube: "動画 / 配信",
   Twitch: "動画 / 配信",
   pixiv: "創作 / 投稿",
