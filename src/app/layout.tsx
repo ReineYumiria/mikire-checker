@@ -13,6 +13,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const adsenseClient = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT ?? "";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://mikire-checker.vercel.app"),
   title: "見切れチェッカー｜画像の表示範囲・安全領域確認ツール",
@@ -42,9 +44,12 @@ export const metadata: Metadata = {
       "画像をアップロードして、YouTube、X（旧Twitter）、Discord、noteなどの表示範囲や安全領域をブラウザ内で確認できるWebツールです。",
     images: ["/twitter-image.png"],
   },
+  ...(adsenseClient && {
+    other: {
+      "google-adsense-account": adsenseClient,
+    },
+  }),
 };
-
-const adsenseClient = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT ?? "";
 
 export default function RootLayout({
   children,
