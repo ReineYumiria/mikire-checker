@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
 import { ImageCanvas, type ImageCanvasHandle } from "@/components/ImageCanvas";
 import { PresetInfoPanel } from "@/components/PresetInfoPanel";
+import { YouTubeCardPreview } from "@/components/YouTubeCardPreview";
 import { presets, serviceCategories } from "@/data/presets";
 
 const CATEGORY_ORDER = [
@@ -187,6 +188,16 @@ export default function Home() {
               setOffsetY={setOffsetY}
             />
           </div>
+
+          {selectedPreset.id === "youtube-thumbnail" && (
+            <YouTubeCardPreview
+              imageUrl={imageUrl}
+              zoom={zoom}
+              offsetX={offsetX}
+              offsetY={offsetY}
+              preset={selectedPreset}
+            />
+          )}
         </section>
 
                   <PresetInfoPanel preset={selectedPreset} />
