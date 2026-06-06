@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -43,6 +44,8 @@ export const metadata: Metadata = {
   },
 };
 
+const adsenseClient = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT ?? "";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -53,6 +56,14 @@ export default function RootLayout({
       lang="ja"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      {adsenseClient && (
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+          crossOrigin="anonymous"
+          strategy="beforeInteractive"
+        />
+      )}
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
