@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
 import { ImageCanvas, type ImageCanvasHandle } from "@/components/ImageCanvas";
@@ -216,6 +217,18 @@ export default function Home() {
 
       <footer className="border-t border-zinc-800 px-6 py-4 text-center text-xs text-zinc-500">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-3">
+          <Link href="/about" className="hover:text-zinc-300">
+            About
+          </Link>
+          <span>/</span>
+          <Link href="/how-to-use" className="hover:text-zinc-300">
+            使い方
+          </Link>
+          <span>/</span>
+          <Link href="/privacy" className="hover:text-zinc-300">
+            プライバシーポリシー
+          </Link>
+          <span>/</span>
           <a
             href="https://github.com/ReineYumiria/mikire-checker"
             target="_blank"
@@ -224,18 +237,10 @@ export default function Home() {
           >
             GitHub
           </a>
-          <span>/</span>
-          <a
-            href="https://github.com/ReineYumiria/mikire-checker/blob/master/PRIVACY.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-zinc-300"
-          >
-            プライバシーポリシー
-          </a>
-          <span>/</span>
-          <span>画像はブラウザ内で処理されます</span>
         </div>
+        <p className="mx-auto mt-2 max-w-7xl text-zinc-600">
+          画像はブラウザ内で処理されます
+        </p>
       </footer>
     </main>
   );
