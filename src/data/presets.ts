@@ -93,7 +93,7 @@ export const presets: Preset[] = [
       "X公式ではプロフィール画像は400×400pxが推奨されています。",
       "実際の表示は円形になるため、四隅には重要な情報を置かない方が安全です。",
       "顔・ロゴ・文字などの重要要素は中央寄りに収めるのがおすすめです。",
-  ],
+    ],
   },
   {
     id: "x-post-16-9",
@@ -259,6 +259,543 @@ export const presets: Preset[] = [
     notes: [
       "小さいサイズに縮小されるため、細かい文字や細い線は潰れやすいです。",
       "顔・ロゴ・シンボルは中央に大きく置くのがおすすめです。",
+    ],
+  },
+  {
+    id: "steam-library-capsule",
+    service: "Steam",
+    name: "ライブラリカプセル",
+    outputWidth: 600,
+    outputHeight: 900,
+    safeArea: {
+      x: 48,
+      y: 90,
+      width: 504,
+      height: 720,
+    },
+    guideShape: "rect",
+    description:
+      "Steamライブラリなどで縦長に表示されるライブラリカプセル画像向けプリセットです。",
+    notes: [
+      "縦長表示のため、タイトルロゴやキャラクターの上下見切れに注意してください。",
+      "サムネイルとして縮小されても見やすいように、主要要素は中央寄りに配置するのがおすすめです。",
+      "安全領域はMVP用の目安です。端に重要要素を置きすぎない確認用として設定しています。",
+    ],
+  },
+  {
+    id: "soundcloud-profile-image",
+    service: "SoundCloud",
+    name: "プロフィール画像",
+    outputWidth: 800,
+    outputHeight: 800,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 800,
+      height: 800,
+    },
+    guideShape: "circle",
+    description:
+      "SoundCloudプロフィール画像向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
+    notes: [
+      "プロフィール画像は正方形で用意し、顔・ロゴ・文字などは中央寄りに配置するのがおすすめです。",
+      "実際の表示では円形になるため、四隅や外周には重要な情報を置かない方が安全です。",
+    ],
+  },
+  {
+    id: "soundcloud-header",
+    service: "SoundCloud",
+    name: "ヘッダー画像",
+    outputWidth: 2480,
+    outputHeight: 520,
+    safeArea: {
+      x: 248,
+      y: 52,
+      width: 1984,
+      height: 416,
+    },
+    guideShape: "rect",
+    description:
+      "SoundCloudプロフィール上部のヘッダー画像向けプリセットです。横長バナーとして見切れを確認します。",
+    notes: [
+      "横長画像のため、ロゴ・文字・顔などの重要要素は中央寄りに置くのがおすすめです。",
+      "端末や表示環境によって端が見切れる可能性があるため、左右端には重要な情報を置かない方が安全です。",
+      "安全領域はMVP用の目安です。実機確認しながら後で調整します。",
+    ],
+  },
+  {
+    id: "soundcloud-track-artwork",
+    service: "SoundCloud",
+    name: "トラック / プレイリスト画像",
+    outputWidth: 800,
+    outputHeight: 800,
+    description:
+      "SoundCloudのトラックやプレイリストに使う正方形アートワーク向けプリセットです。",
+    notes: [
+      "サムネイルとして小さく表示されるため、タイトルやロゴは大きめに配置するのがおすすめです。",
+      "上下左右の端に重要要素を寄せすぎない方が安全です。",
+    ],
+  },
+  {
+    id: "soundcloud-distribution-artwork",
+    service: "SoundCloud",
+    name: "配信用アートワーク",
+    outputWidth: 3000,
+    outputHeight: 3000,
+    description:
+      "SoundCloud経由の配信などで使う高解像度の正方形アートワーク向けプリセットです。",
+    notes: [
+      "配信用アートワークは各配信先でも使われるため、文字やロゴの可読性を重視してください。",
+      "小さなサムネイル表示でも印象が崩れないよう、主要要素は中央寄りに大きく配置するのがおすすめです。",
+    ],
+  },
+  {
+    id: "twitch-profile-image",
+    service: "Twitch",
+    name: "プロフィール画像",
+    outputWidth: 800,
+    outputHeight: 800,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 800,
+      height: 800,
+    },
+    guideShape: "circle",
+    description:
+      "Twitchプロフィール画像向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
+    notes: [
+      "プロフィール画像は小さく表示されることが多いため、顔・ロゴ・文字は中央に大きく配置するのがおすすめです。",
+      "円形表示を想定して、四隅や外周には重要な情報を置かない方が安全です。",
+    ],
+  },
+  {
+    id: "twitch-profile-banner",
+    service: "Twitch",
+    name: "プロフィールバナー",
+    outputWidth: 1200,
+    outputHeight: 480,
+    safeArea: {
+      x: 120,
+      y: 48,
+      width: 960,
+      height: 384,
+    },
+    guideShape: "rect",
+    description:
+      "Twitchチャンネルページのプロフィールバナー向けプリセットです。横長バナーとして見切れを確認します。",
+    notes: [
+      "横長表示のため、ロゴ・文字・顔などの重要要素は中央寄りに配置するのがおすすめです。",
+      "端末や表示環境によって端が見切れる可能性があるため、左右端には重要な情報を置かない方が安全です。",
+      "安全領域はMVP用の目安です。実機確認しながら後で調整します。",
+    ],
+  },
+  {
+    id: "twitch-offline-screen",
+    service: "Twitch",
+    name: "オフライン画面",
+    outputWidth: 1920,
+    outputHeight: 1080,
+    description:
+      "Twitchチャンネルのオフライン画面向けプリセットです。16:9画像として表示確認します。",
+    notes: [
+      "配信画面と同じ16:9比率のため、ロゴ・告知文・SNS情報の配置確認に向いています。",
+      "スマホや小さい表示でも読めるように、文字は大きめに配置するのがおすすめです。",
+    ],
+  },
+  {
+    id: "pixiv-profile-cover",
+    service: "pixiv",
+    name: "プロフィールカバー",
+    outputWidth: 1200,
+    outputHeight: 600,
+    safeArea: {
+      x: 120,
+      y: 60,
+      width: 960,
+      height: 480,
+    },
+    guideShape: "rect",
+    description:
+      "pixivプロフィールページのカバー画像向けプリセットです。横長カバーとして見切れを確認します。",
+    notes: [
+      "プロフィールカバーは横長表示のため、顔・ロゴ・文字などの重要要素は中央寄りに配置するのがおすすめです。",
+      "端末や表示環境によって端が見切れる可能性があるため、外周には重要な情報を置かない方が安全です。",
+      "安全領域はMVP用の目安です。実機確認しながら後で調整します。",
+    ],
+  },
+  {
+    id: "pixiv-manga-series-cover",
+    service: "pixiv",
+    name: "マンガシリーズカバー",
+    outputWidth: 1200,
+    outputHeight: 630,
+    safeArea: {
+      x: 120,
+      y: 63,
+      width: 960,
+      height: 504,
+    },
+    guideShape: "rect",
+    description:
+      "pixivのマンガシリーズ用カバー画像向けプリセットです。横長のカバー画像として確認します。",
+    notes: [
+      "シリーズ名やメインビジュアルは中央寄りに配置すると、一覧表示でも見やすくなります。",
+      "上下左右の端に重要要素を寄せすぎない方が安全です。",
+      "安全領域はMVP用の目安です。端を避ける確認用として設定しています。",
+    ],
+  },
+  {
+    id: "pixiv-search-thumbnail-square",
+    service: "pixiv",
+    name: "検索サムネイル 正方形",
+    outputWidth: 1200,
+    outputHeight: 1200,
+    safeArea: {
+      x: 120,
+      y: 120,
+      width: 960,
+      height: 960,
+    },
+    guideShape: "rect",
+    description:
+      "pixivの検索結果や一覧表示で正方形サムネイルとして見える場合を想定した確認用プリセットです。",
+    notes: [
+      "作品画像が一覧で正方形に近いサムネイルとして表示される場合の見切れ確認に使います。",
+      "顔・文字・重要な構図は中央寄りに配置すると、一覧表示でも見切れにくくなります。",
+      "実際の表示は画面幅や表示場所によって変わる可能性があるため、目安として確認してください。",
+    ],
+  },
+  {
+    id: "fanbox-plan-cover",
+    service: "FANBOX",
+    name: "プランカバー",
+    outputWidth: 1200,
+    outputHeight: 600,
+    safeArea: {
+      x: 120,
+      y: 60,
+      width: 960,
+      height: 480,
+    },
+    guideShape: "rect",
+    description:
+      "FANBOXのプランカバー画像向けプリセットです。横長カバーとして見切れを確認します。",
+    notes: [
+      "プラン名や重要な文字は中央寄りに配置すると、表示環境の差による見切れを避けやすくなります。",
+      "左右端や上下端には、重要な顔・ロゴ・文字を置かない方が安全です。",
+      "安全領域はMVP用の目安です。実機確認しながら後で調整します。",
+    ],
+  },
+  {
+    id: "itchio-cover-image",
+    service: "itch.io",
+    name: "Cover Image",
+    outputWidth: 630,
+    outputHeight: 500,
+    safeArea: {
+      x: 63,
+      y: 50,
+      width: 504,
+      height: 400,
+    },
+    guideShape: "rect",
+    description:
+      "itch.ioのゲームページなどで使われるカバー画像向けプリセットです。やや横長のサムネイルとして見切れを確認します。",
+    notes: [
+      "ゲームタイトルや主要ビジュアルは中央寄りに配置すると、一覧表示でも見やすくなります。",
+      "小さく表示されることがあるため、細かい文字や装飾は潰れやすいです。",
+      "安全領域はMVP用の目安です。端に重要要素を置きすぎない確認用として設定しています。",
+    ],
+  },
+  {
+    id: "itchio-embed-image",
+    service: "itch.io",
+    name: "Embed Image",
+    outputWidth: 640,
+    outputHeight: 360,
+    safeArea: {
+      x: 64,
+      y: 36,
+      width: 512,
+      height: 288,
+    },
+    guideShape: "rect",
+    description:
+      "itch.ioの埋め込み表示などで使われる16:9画像向けプリセットです。",
+    notes: [
+      "16:9の横長画像として、ゲーム画面・タイトルロゴ・告知画像の配置確認に向いています。",
+      "埋め込みや一覧では縮小表示されるため、文字は大きめに配置するのがおすすめです。",
+      "安全領域はMVP用の目安です。実際の表示に合わせて後で調整します。",
+    ],
+  },
+  {
+    id: "github-social-preview",
+    service: "GitHub",
+    name: "ソーシャルプレビュー",
+    outputWidth: 1280,
+    outputHeight: 640,
+    safeArea: {
+      x: 128,
+      y: 64,
+      width: 1024,
+      height: 512,
+    },
+    guideShape: "rect",
+    description:
+      "GitHubリポジトリのSNS共有時などに表示されるソーシャルプレビュー画像向けプリセットです。",
+    notes: [
+      "GitHub公式では、最適な表示として1280×640pxが推奨されています。",
+      "リポジトリ名・ロゴ・主要テキストは中央寄りに配置すると、小さなカード表示でも読みやすくなります。",
+      "ファイルサイズ制限もあるため、最終アップロード時はGitHub側の条件を確認してください。",
+    ],
+  },
+  {
+    id: "instagram-profile-image",
+    service: "Instagram",
+    name: "プロフィール画像",
+    outputWidth: 320,
+    outputHeight: 320,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 320,
+      height: 320,
+    },
+    guideShape: "circle",
+    description:
+      "Instagramプロフィール画像向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
+    notes: [
+      "プロフィール画像は円形で表示されるため、四隅や外周には重要な情報を置かない方が安全です。",
+      "顔・ロゴ・文字などの重要要素は中央に大きめに配置するのがおすすめです。",
+    ],
+  },
+  {
+    id: "instagram-post-square",
+    service: "Instagram",
+    name: "投稿画像 正方形",
+    outputWidth: 1080,
+    outputHeight: 1080,
+    safeArea: {
+      x: 108,
+      y: 108,
+      width: 864,
+      height: 864,
+    },
+    guideShape: "rect",
+    description:
+      "Instagramの正方形投稿向けプリセットです。フィード投稿や告知画像の確認に使います。",
+    notes: [
+      "フィードやプロフィールグリッドでは縮小表示されるため、文字は大きめに配置するのがおすすめです。",
+      "上下左右の端に重要要素を寄せすぎない方が安全です。",
+    ],
+  },
+  {
+    id: "instagram-post-portrait",
+    service: "Instagram",
+    name: "投稿画像 縦長 4:5",
+    outputWidth: 1080,
+    outputHeight: 1350,
+    safeArea: {
+      x: 108,
+      y: 135,
+      width: 864,
+      height: 1080,
+    },
+    guideShape: "rect",
+    description:
+      "Instagramの縦長フィード投稿向けプリセットです。4:5比率の投稿画像として確認します。",
+    notes: [
+      "縦長投稿は画面内で大きく見せやすい一方、上下の端に重要要素を置くと見切れやすくなります。",
+      "顔・ロゴ・文字などは中央寄りに配置するのがおすすめです。",
+    ],
+  },
+  {
+    id: "instagram-story-reels",
+    service: "Instagram",
+    name: "ストーリーズ / リール",
+    outputWidth: 1080,
+    outputHeight: 1920,
+    safeArea: {
+      x: 108,
+      y: 240,
+      width: 864,
+      height: 1440,
+    },
+    guideShape: "rect",
+    description:
+      "Instagramのストーリーズやリール向けプリセットです。9:16縦長画像として表示確認します。",
+    notes: [
+      "上下にはUIが重なる場合があるため、重要な文字や顔は中央寄りに配置するのがおすすめです。",
+      "スマホ全画面で見られるため、縦方向の余白と文字サイズに注意してください。",
+      "安全領域はMVP用の目安です。実際の表示に合わせて後で調整します。",
+    ],
+  },
+  {
+    id: "tiktok-profile-image",
+    service: "TikTok",
+    name: "プロフィール画像",
+    outputWidth: 720,
+    outputHeight: 720,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 720,
+      height: 720,
+    },
+    guideShape: "circle",
+    description:
+      "TikTokプロフィール画像向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
+    notes: [
+      "プロフィール画像は円形表示を想定して、顔・ロゴ・文字は中央寄りに配置するのがおすすめです。",
+      "TikTok公式ヘルプでは、アップロード可能なプロフィール画像の最小サイズが案内されています。",
+    ],
+  },
+  {
+    id: "tiktok-video-cover",
+    service: "TikTok",
+    name: "動画カバー / サムネイル",
+    outputWidth: 1080,
+    outputHeight: 1920,
+    safeArea: {
+      x: 108,
+      y: 240,
+      width: 864,
+      height: 1440,
+    },
+    guideShape: "rect",
+    description:
+      "TikTok動画のカバーやサムネイル向けプリセットです。9:16縦長画像として確認します。",
+    notes: [
+      "プロフィールグリッドや検索結果では、表示位置や切り抜きが変わる可能性があります。",
+      "タイトル文字や顔は中央寄りに置くと、スマホ表示でも見切れにくくなります。",
+      "安全領域はMVP用の目安です。実機確認しながら後で調整します。",
+    ],
+  },
+  {
+    id: "booth-shop-header",
+    service: "BOOTH",
+    name: "ショップヘッダー 目安",
+    outputWidth: 1200,
+    outputHeight: 400,
+    safeArea: {
+      x: 120,
+      y: 40,
+      width: 960,
+      height: 320,
+    },
+    guideShape: "rect",
+    description:
+      "BOOTHショップ上部のヘッダー画像を想定した目安プリセットです。",
+    notes: [
+      "BOOTHの表示仕様やテーマによって見え方が変わる可能性があります。",
+      "ショップ名・ロゴ・顔などの重要要素は中央寄りに配置するのがおすすめです。",
+      "このプリセットはMVP用の目安です。実際のショップ表示を見ながら後で調整します。",
+    ],
+  },
+  {
+    id: "booth-item-thumbnail",
+    service: "BOOTH",
+    name: "商品サムネイル 正方形 目安",
+    outputWidth: 1200,
+    outputHeight: 1200,
+    safeArea: {
+      x: 120,
+      y: 120,
+      width: 960,
+      height: 960,
+    },
+    guideShape: "rect",
+    description:
+      "BOOTHの商品一覧や商品画像サムネイルを想定した正方形の目安プリセットです。",
+    notes: [
+      "商品画像は一覧で小さく表示されるため、商品本体やタイトルは大きめに配置するのがおすすめです。",
+      "上下左右の端に重要要素を寄せすぎない方が安全です。",
+      "このプリセットはMVP用の目安です。実際のBOOTH表示を見ながら後で調整します。",
+    ],
+  },
+  {
+    id: "cien-article-eyecatch",
+    service: "Ci-en",
+    name: "記事アイキャッチ 目安",
+    outputWidth: 1280,
+    outputHeight: 720,
+    safeArea: {
+      x: 128,
+      y: 72,
+      width: 1024,
+      height: 576,
+    },
+    guideShape: "rect",
+    description:
+      "Ci-enの記事アイキャッチ画像を想定した16:9の目安プリセットです。",
+    notes: [
+      "記事一覧やカード表示では縮小されるため、文字や顔は中央寄りに大きく配置するのがおすすめです。",
+      "上下左右の端に重要要素を寄せすぎない方が安全です。",
+      "このプリセットはMVP用の目安です。実際のCi-en表示を見ながら後で調整します。",
+    ],
+  },
+  {
+    id: "cien-plan-cover",
+    service: "Ci-en",
+    name: "プランカバー 目安",
+    outputWidth: 1200,
+    outputHeight: 600,
+    safeArea: {
+      x: 120,
+      y: 60,
+      width: 960,
+      height: 480,
+    },
+    guideShape: "rect",
+    description:
+      "Ci-enのプランやクリエイターページ周辺で使うカバー画像を想定した目安プリセットです。",
+    notes: [
+      "プラン名・説明テキスト・キャラクターの顔などは中央寄りに配置するのがおすすめです。",
+      "表示場所によってトリミングが変わる可能性があるため、端には重要要素を置かない方が安全です。",
+      "このプリセットはMVP用の目安です。実際の表示を確認しながら後で調整します。",
+    ],
+  },
+  {
+    id: "skeb-creator-header",
+    service: "Skeb",
+    name: "クリエイターヘッダー 目安",
+    outputWidth: 1500,
+    outputHeight: 500,
+    safeArea: {
+      x: 150,
+      y: 70,
+      width: 1200,
+      height: 340,
+    },
+    guideShape: "rect",
+    description:
+      "Skebのクリエイターページ上部に使うヘッダー画像を想定した目安プリセットです。",
+    notes: [
+      "プロフィールアイコンやUIと重なる可能性があるため、重要要素は中央寄りに配置するのがおすすめです。",
+      "端末や表示幅によって見え方が変わる可能性があります。",
+      "このプリセットはMVP用の目安です。実際のSkeb表示を見ながら後で調整します。",
+    ],
+  },
+  {
+    id: "skeb-profile-icon",
+    service: "Skeb",
+    name: "プロフィール画像 目安",
+    outputWidth: 800,
+    outputHeight: 800,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 800,
+      height: 800,
+    },
+    guideShape: "circle",
+    description:
+      "Skebプロフィール画像向けの目安プリセットです。円形表示を想定して、外周の見切れを確認します。",
+    notes: [
+      "顔・ロゴ・文字などの重要要素は中央に大きく配置するのがおすすめです。",
+      "円形表示では四隅が見えなくなるため、外周には重要な情報を置かない方が安全です。",
+      "このプリセットはMVP用の目安です。実際の表示を確認しながら後で調整します。",
     ],
   },
   {
