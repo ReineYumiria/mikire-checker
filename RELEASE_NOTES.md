@@ -1,5 +1,26 @@
 # Release Notes
 
+## v1.6.0（2026-06-06）
+
+見切れチェッカー v1.6.0 では、AdSense申請前・検索流入向けのSEO基盤整備を行いました。
+
+### 追加・更新内容
+
+- `src/app/sitemap.ts` 追加（`/sitemap.xml` 自動生成対応）
+  - `/` `/about` `/how-to-use` `/privacy` の4URLを含む
+- `src/app/robots.ts` 追加（`/robots.txt` 自動生成対応）
+  - 全User-agentをAllow、sitemapのURLを明示
+- トップページ下部に「見切れチェッカーとは」説明セクションを追加
+  - ツール概要・対応サービス例・主な機能・ブラウザ内処理・関連ページ導線を掲載
+  - A案広告枠とfooterの間に配置
+- `/privacy` ページの metadata description を具体化
+
+### 補足
+
+- 実広告コード・Google AdSense 等の script は未導入です。広告枠はプレースホルダーのままです。
+- `AdPlaceholder` コンポーネントは変更なし。
+- Canvas 描画・画像処理・PNG 書き出し処理は変更なし。
+
 ## v1.5.0（2026-06-06）
 
 見切れチェッカー v1.5.0 では、AdSense申請前のサイト内ページ整備とフッター導線の整理を行いました。

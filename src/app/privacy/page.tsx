@@ -3,7 +3,8 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "プライバシーポリシー | 見切れチェッカー",
-  description: "見切れチェッカーのプライバシーポリシーです。",
+  description:
+    "見切れチェッカーのプライバシーポリシーです。画像はブラウザ内のみで処理しサーバーには送信されません。アクセス解析・広告・Cookieの取り扱い、Vercel利用、お問い合わせ先について説明しています。",
 };
 
 export default function PrivacyPage() {

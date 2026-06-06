@@ -215,6 +215,57 @@ export default function Home() {
         />
       </div>
 
+      <section className="mx-auto max-w-7xl px-6 py-8">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 px-8 py-8">
+          <h2 className="mb-2 text-lg font-semibold text-zinc-100">
+            見切れチェッカーとは
+          </h2>
+          <p className="mb-6 leading-relaxed text-zinc-400">
+            画像をアップロードして、各サービスの表示範囲・安全領域をブラウザ内で確認できる無料のWebツールです。
+            YouTubeサムネイル、X（旧Twitter）ヘッダー、Discordアイコン、Steamカプセル画像など、創作・配信・ゲーム・SNS向けのプリセットを多数用意しています。
+          </p>
+
+          <div className="mb-6 grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="mb-2 text-sm font-medium text-zinc-300">主な機能</p>
+              <ul className="space-y-1 text-sm text-zinc-500">
+                <li>・ 安全領域ガイド表示（矩形 / 円形）</li>
+                <li>・ 画像のドラッグ位置調整</li>
+                <li>・ ズーム調整（ホイール・ピンチ対応）</li>
+                <li>・ PNG書き出し / ガイド付きPNG書き出し</li>
+              </ul>
+            </div>
+            <div>
+              <p className="mb-2 text-sm font-medium text-zinc-300">プライバシー</p>
+              <p className="text-sm text-zinc-500">
+                アップロードした画像はサーバーに送信されません。画像の読み込み・プレビュー・書き出しはすべてブラウザ内で処理されます。
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-3 text-sm">
+            <Link
+              href="/how-to-use"
+              className="text-sky-400 hover:underline"
+            >
+              使い方を見る →
+            </Link>
+            <Link
+              href="/about"
+              className="text-sky-400 hover:underline"
+            >
+              対応サービス一覧 →
+            </Link>
+            <Link
+              href="/privacy"
+              className="text-sky-400 hover:underline"
+            >
+              プライバシーポリシー →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <footer className="border-t border-zinc-800 px-6 py-4 text-center text-xs text-zinc-500">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-3">
           <Link href="/about" className="hover:text-zinc-300">
