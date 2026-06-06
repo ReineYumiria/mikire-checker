@@ -4,12 +4,32 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
 import { ImageCanvas, type ImageCanvasHandle } from "@/components/ImageCanvas";
 import { PresetInfoPanel } from "@/components/PresetInfoPanel";
-import { presets } from "@/data/presets";
+import { presets, serviceCategories } from "@/data/presets";
+
+const CATEGORY_ORDER = [
+  "SNS",
+  "動画 / 配信",
+  "創作 / 投稿",
+  "音楽",
+  "ゲーム / ストア",
+  "開発 / その他",
+];
 
 export default function Home() {
   const services = useMemo(() => {
     return Array.from(new Set(presets.map((preset) => preset.service)));
   }, []);
+
+  const serviceGroups = useMemo(() => {
+    const grouped: Record<string, string[]> = {};
+    for (const service of services) {
+      const category = serviceCategories[service] ?? "開発 / その他";
+      (grouped[category] ??= []).push(service);
+    }
+    return CATEGORY_ORDER.filter((cat) => grouped[cat]?.length > 0).map(
+      (cat) => ({ category: cat, services: grouped[cat] }),
+    );
+  }, [services]);
 
   const [selectedService, setSelectedService] = useState(services[0]);
   const [selectedPresetId, setSelectedPresetId] = useState(presets[0].id);
@@ -120,7 +140,7 @@ export default function Home() {
 
       <div className="mx-auto grid max-w-7xl gap-4 px-6 py-6 lg:grid-cols-[280px_1fr_320px]">
         <ControlPanel
-          services={services}
+          serviceGroups={serviceGroups}
           presets={servicePresets}
           selectedService={selectedService}
           selectedPresetId={selectedPresetId}
@@ -169,7 +189,7 @@ export default function Home() {
           </div>
         </section>
 
-                <PresetInfoPanel preset={selectedPreset} />
+                  <PresetInfoPanel preset={selectedPreset} />
       </div>
 
       <footer className="border-t border-zinc-800 px-6 py-4 text-center text-xs text-zinc-500">

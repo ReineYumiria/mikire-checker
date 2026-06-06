@@ -860,3 +860,23 @@ export const presets: Preset[] = [
     ],
   },
 ];
+
+export const serviceCategories: Record<string, string> = {
+  "X（旧Twitter）": "SNS",
+  Instagram: "SNS",
+  TikTok: "SNS",
+  // Bluesky / Misskey をここに追加予定
+  YouTube: "動画 / 配信",
+  Twitch: "動画 / 配信",
+  pixiv: "創作 / 投稿",
+  FANBOX: "創作 / 投稿",
+  BOOTH: "創作 / 投稿",
+  "Ci-en": "創作 / 投稿",
+  Skeb: "創作 / 投稿",
+  note: "創作 / 投稿",
+  SoundCloud: "音楽",
+  Steam: "ゲーム / ストア",
+  "itch.io": "ゲーム / ストア",
+  GitHub: "開発 / その他",
+  Discord: "開発 / その他",
+};

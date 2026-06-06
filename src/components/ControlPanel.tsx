@@ -1,7 +1,9 @@
 import type { Preset } from "@/types/preset";
 
+type ServiceGroup = { category: string; services: string[] };
+
 type ControlPanelProps = {
-  services: string[];
+  serviceGroups: ServiceGroup[];
   presets: Preset[];
   selectedService: string;
   selectedPresetId: string;
@@ -21,7 +23,7 @@ type ControlPanelProps = {
 };
 
 export function ControlPanel({
-  services,
+  serviceGroups,
   presets,
   selectedService,
   selectedPresetId,
@@ -75,10 +77,14 @@ export function ControlPanel({
             onChange={(event) => onServiceChange(event.target.value)}
             className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none focus:border-sky-500"
           >
-            {services.map((service) => (
-              <option key={service} value={service}>
-                {service}
-              </option>
+            {serviceGroups.map(({ category, services }) => (
+              <optgroup key={category} label={category}>
+                {services.map((service) => (
+                  <option key={service} value={service}>
+                    {service}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
         </div>
