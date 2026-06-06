@@ -520,6 +520,8 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         style={{
           aspectRatio: `${preset.outputWidth} / ${preset.outputHeight}`,
           touchAction: "none",
+          maxHeight: "72vh",
+          width: `min(100%, calc(72vh * ${preset.outputWidth / preset.outputHeight}))`,
         }}
         onWheel={handleWheel}
         onPointerDown={handlePointerDown}
