@@ -35,8 +35,10 @@ https://mikire-checker.vercel.app/
 - PC / スマホの両方で利用できます
 - YouTube サムネイル選択時にホーム風カードプレビューを表示できます（試作）
 - 収益化準備として広告枠を設置しています（`AdSlot` コンポーネント経由で管理）
-- 開発環境や環境変数未設定時はプレースホルダー表示になります
-- 実広告の有効化・AdSense script・ads.txt は v1.9.0 以降で対応予定
+- 開発環境や広告表示用の環境変数未設定時はプレースホルダー表示になります
+- AdSense 所有権確認用の client ID は `NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT` で管理します
+- Google AdSense のサイト所有権確認済み・審査リクエスト済み（現在審査待ち）
+- 実広告はまだ表示していません。実広告の有効化・ads.txt は v1.10.0 以降で対応予定です
 - About / 使い方 / プライバシーポリシーのサイト内ページを提供しています
 - sitemap.xml / robots.txt を自動生成しています
 

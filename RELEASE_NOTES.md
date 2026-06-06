@@ -1,5 +1,28 @@
 # Release Notes
 
+## v1.9.0（2026-06-06）
+
+見切れチェッカー v1.9.0 では、Google AdSense のサイト登録・所有権確認・審査リクエストへの対応を行いました。
+
+### 追加・更新内容
+
+- `src/app/layout.tsx` に AdSense 所有権確認用 Script を追加
+  - `next/script` を使用し `strategy="beforeInteractive"` で読み込む
+  - AdSense client ID は `NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT` 環境変数から読む
+  - 環境変数未設定時は Script を出力しない
+- `metadata.other` に `google-adsense-account` meta タグを追加
+  - `NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT` が設定されている場合のみ出力する（条件付きスプレッド）
+- Vercel の Production 環境変数に `NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT` を設定
+- AdSense のサイト所有権確認が完了
+- AdSense の審査リクエストを実施（現在審査待ち）
+
+### 補足
+
+- 実広告ユニット ID・slot ID・ads.txt・実広告表示の有効化は未導入です。
+- Privacy Policy の「広告掲載中」表現への変更はまだ行いません。
+- 実広告の導入は AdSense 審査結果を確認してから **v1.10.0 以降**で対応予定です。
+- `AdSlot` コンポーネント・ページ内広告枠の配置・Canvas 描画・画像処理・PNG 書き出し処理は変更なし。
+
 ## v1.8.0（2026-06-06）
 
 見切れチェッカー v1.8.0 では、Google AdSense申請前の最終確認と実広告導入前の構成整理を行いました。
