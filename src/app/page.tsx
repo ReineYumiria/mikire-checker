@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
 import { ImageCanvas, type ImageCanvasHandle } from "@/components/ImageCanvas";
+import { AdPlaceholder } from "@/components/AdPlaceholder";
 import { PresetInfoPanel } from "@/components/PresetInfoPanel";
 import { YouTubeCardPreview } from "@/components/YouTubeCardPreview";
 import { presets, serviceCategories } from "@/data/presets";
@@ -200,7 +201,17 @@ export default function Home() {
           )}
         </section>
 
-                  <PresetInfoPanel preset={selectedPreset} />
+        <div className="flex flex-col gap-4">
+          <PresetInfoPanel preset={selectedPreset} />
+          <AdPlaceholder className="h-[250px] w-full" />
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-6 py-4">
+        <AdPlaceholder
+          label="広告枠（ページ下部プレースホルダー）"
+          className="h-[90px] w-full"
+        />
       </div>
 
       <footer className="border-t border-zinc-800 px-6 py-4 text-center text-xs text-zinc-500">
