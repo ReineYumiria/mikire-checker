@@ -36,7 +36,7 @@ https://mikire-checker.vercel.app/
 - YouTube サムネイル選択時にホーム風カードプレビューを表示できます（試作）
 - 収益化準備として広告枠を設置しています（`AdSlot` コンポーネント経由で管理）
 - 開発環境や環境変数未設定時はプレースホルダー表示になります
-- 実広告の有効化・AdSense script・ads.txt は今後のバージョンで対応予定
+- 実広告の有効化・AdSense script・ads.txt は v1.9.0 以降で対応予定
 - About / 使い方 / プライバシーポリシーのサイト内ページを提供しています
 - sitemap.xml / robots.txt を自動生成しています
 
