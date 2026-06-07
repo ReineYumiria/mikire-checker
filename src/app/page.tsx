@@ -50,8 +50,15 @@ export default function Home() {
   const [includeGuideInExport, setIncludeGuideInExport] = useState(false);
   const [saveMethod, setSaveMethod] = useState<"download" | "picker">("download");
   const [pickerFallbackMessage, setPickerFallbackMessage] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState(
+    () => serviceCategories[services[0]] ?? CATEGORY_ORDER[0],
+  );
 
   const imageCanvasRef = useRef<ImageCanvasHandle | null>(null);
+
+  const servicesInCategory = useMemo(() => {
+    return serviceGroups.find((g) => g.category === selectedCategory)?.services ?? [];
+  }, [serviceGroups, selectedCategory]);
 
   const servicePresets = useMemo(() => {
     return presets.filter((preset) => preset.service === selectedService);
@@ -115,6 +122,18 @@ export default function Home() {
     resetView();
   };
 
+  const handleCategoryChange = (category: string) => {
+    const group = serviceGroups.find((g) => g.category === category);
+    if (!group || group.services.length === 0) return;
+    const nextService = group.services[0];
+    const nextPreset = presets.find((p) => p.service === nextService);
+    if (!nextPreset) return;
+    setSelectedCategory(category);
+    setSelectedService(nextService);
+    setSelectedPresetId(nextPreset.id);
+    resetView();
+  };
+
   const handleServiceChange = (service: string) => {
     const nextPreset = presets.find((preset) => preset.service === service);
 
@@ -168,7 +187,9 @@ export default function Home() {
 
       <div className="mx-auto grid max-w-7xl gap-4 px-6 py-6 lg:grid-cols-[280px_1fr_320px]">
         <ControlPanel
-          serviceGroups={serviceGroups}
+          categories={serviceGroups.map((g) => g.category)}
+          selectedCategory={selectedCategory}
+          servicesInCategory={servicesInCategory}
           presets={servicePresets}
           selectedService={selectedService}
           selectedPresetId={selectedPresetId}
@@ -183,6 +204,7 @@ export default function Home() {
           saveMethod={saveMethod}
           pickerFallbackMessage={pickerFallbackMessage}
           onImageChange={handleImageChange}
+          onCategoryChange={handleCategoryChange}
           onServiceChange={handleServiceChange}
           onPresetChange={handlePresetChange}
           onZoomChange={handleZoomChange}

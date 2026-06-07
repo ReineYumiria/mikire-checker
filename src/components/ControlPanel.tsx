@@ -5,10 +5,10 @@ const normalizeAngle = (angle: number): number => {
   return mod > 180 ? mod - 360 : mod;
 };
 
-type ServiceGroup = { category: string; services: string[] };
-
 type ControlPanelProps = {
-  serviceGroups: ServiceGroup[];
+  categories: string[];
+  selectedCategory: string;
+  servicesInCategory: string[];
   presets: Preset[];
   selectedService: string;
   selectedPresetId: string;
@@ -23,6 +23,7 @@ type ControlPanelProps = {
   saveMethod: "download" | "picker";
   pickerFallbackMessage: string | null;
   onImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onCategoryChange: (category: string) => void;
   onServiceChange: (service: string) => void;
   onPresetChange: (presetId: string) => void;
   onZoomChange: (zoom: number) => void;
@@ -37,7 +38,9 @@ type ControlPanelProps = {
 };
 
 export function ControlPanel({
-  serviceGroups,
+  categories,
+  selectedCategory,
+  servicesInCategory,
   presets,
   selectedService,
   selectedPresetId,
@@ -52,6 +55,7 @@ export function ControlPanel({
   saveMethod,
   pickerFallbackMessage,
   onImageChange,
+  onCategoryChange,
   onServiceChange,
   onPresetChange,
   onZoomChange,
@@ -93,6 +97,23 @@ export function ControlPanel({
 
         <div>
           <label className="mb-2 block text-sm font-medium text-zinc-300">
+            カテゴリ
+          </label>
+          <select
+            value={selectedCategory}
+            onChange={(event) => onCategoryChange(event.target.value)}
+            className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none focus:border-sky-500"
+          >
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-medium text-zinc-300">
             対象サービス
           </label>
           <select
@@ -100,14 +121,10 @@ export function ControlPanel({
             onChange={(event) => onServiceChange(event.target.value)}
             className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none focus:border-sky-500"
           >
-            {serviceGroups.map(({ category, services }) => (
-              <optgroup key={category} label={category}>
-                {services.map((service) => (
-                  <option key={service} value={service}>
-                    {service}
-                  </option>
-                ))}
-              </optgroup>
+            {servicesInCategory.map((service) => (
+              <option key={service} value={service}>
+                {service}
+              </option>
             ))}
           </select>
         </div>
