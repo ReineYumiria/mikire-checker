@@ -162,6 +162,46 @@ export const presets: Preset[] = [
     ],
   },
   {
+    id: "slack-workspace-icon",
+    service: "Slack",
+    name: "ワークスペースアイコン",
+    outputWidth: 512,
+    outputHeight: 512,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 512,
+      height: 512,
+    },
+    guideShape: "circle",
+    description:
+      "Slackワークスペースのアイコン向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
+    notes: [
+      "ワークスペースアイコンは円形で表示されるため、四隅や外周には重要な情報を置かない方が安全です。",
+      "ロゴや文字は中央に大きく配置するのがおすすめです。",
+    ],
+  },
+  {
+    id: "slack-profile-image",
+    service: "Slack",
+    name: "プロフィール画像",
+    outputWidth: 512,
+    outputHeight: 512,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 512,
+      height: 512,
+    },
+    guideShape: "circle",
+    description:
+      "Slackプロフィール画像向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
+    notes: [
+      "プロフィール画像は円形表示を想定して、顔・ロゴ・文字は中央寄りに配置するのがおすすめです。",
+      "外周や四隅には重要な情報を置かない方が安全です。",
+    ],
+  },
+  {
     id: "steam-header-capsule",
     service: "Steam",
     name: "ヘッダーカプセル",
@@ -401,6 +441,19 @@ export const presets: Preset[] = [
     notes: [
       "配信画面と同じ16:9比率のため、ロゴ・告知文・SNS情報の配置確認に向いています。",
       "スマホや小さい表示でも読めるように、文字は大きめに配置するのがおすすめです。",
+    ],
+  },
+  {
+    id: "niconico-video-thumbnail",
+    service: "ニコニコ動画",
+    name: "動画サムネイル",
+    outputWidth: 1280,
+    outputHeight: 720,
+    description:
+      "ニコニコ動画の動画サムネイル向けプリセットです。16:9のサムネイルとして見切れを確認します。",
+    notes: [
+      "サムネイルは小さく表示されることが多いため、文字やロゴは大きめに配置するのがおすすめです。",
+      "重要な文字や顔は中央寄りに置くと、縮小表示でも見切れにくくなります。",
     ],
   },
   {
@@ -691,6 +744,52 @@ export const presets: Preset[] = [
       "プロフィールグリッドや検索結果では、表示位置や切り抜きが変わる可能性があります。",
       "タイトル文字や顔は中央寄りに置くと、スマホ表示でも見切れにくくなります。",
       "安全領域はMVP用の目安です。実機確認しながら後で調整します。",
+    ],
+  },
+  {
+    id: "threads-profile-image",
+    service: "Threads",
+    name: "プロフィール画像",
+    outputWidth: 320,
+    outputHeight: 320,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 320,
+      height: 320,
+    },
+    guideShape: "circle",
+    description:
+      "Threadsのプロフィール画像向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
+    notes: [
+      "プロフィール画像は円形表示を想定して、顔・ロゴ・文字は中央寄りに配置するのがおすすめです。",
+      "四隅や外周には重要な情報を置かない方が安全です。",
+    ],
+  },
+  {
+    id: "threads-post-square",
+    service: "Threads",
+    name: "投稿画像 正方形",
+    outputWidth: 1080,
+    outputHeight: 1080,
+    description:
+      "Threadsの正方形投稿画像向けプリセットです。フィード投稿や告知画像の確認に使います。",
+    notes: [
+      "フィードでは縮小表示されるため、文字は大きめに配置するのがおすすめです。",
+      "上下左右の端に重要要素を寄せすぎない方が安全です。",
+    ],
+  },
+  {
+    id: "threads-post-portrait",
+    service: "Threads",
+    name: "投稿画像 縦長 4:5",
+    outputWidth: 1080,
+    outputHeight: 1350,
+    description:
+      "Threadsの縦長投稿画像向けプリセットです。4:5比率の投稿画像として確認します。",
+    notes: [
+      "縦長投稿は画面内で大きく見せやすい一方、上下の端に重要要素を置くと見切れやすくなります。",
+      "顔・ロゴ・文字などは中央寄りに配置するのがおすすめです。",
     ],
   },
   {
@@ -1102,12 +1201,16 @@ export const serviceCategories: Record<string, string> = {
   "X（旧Twitter）": "SNS",
   Instagram: "SNS",
   TikTok: "SNS",
+  Threads: "SNS",
   Bluesky: "SNS",
   Misskey: "SNS",
   Mastodon: "SNS",
   Facebook: "SNS",
+  Discord: "コミュニケーション",
+  Slack: "コミュニケーション",
   YouTube: "動画 / 配信",
   Twitch: "動画 / 配信",
+  ニコニコ動画: "動画 / 配信",
   pixiv: "創作 / 投稿",
   FANBOX: "創作 / 投稿",
   BOOTH: "創作 / 投稿",
@@ -1122,5 +1225,4 @@ export const serviceCategories: Record<string, string> = {
   "itch.io": "ゲーム / ストア",
   VRChat: "ゲーム / ストア",
   GitHub: "開発 / その他",
-  Discord: "開発 / その他",
 };

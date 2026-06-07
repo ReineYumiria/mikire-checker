@@ -12,6 +12,7 @@ import { presets, serviceCategories } from "@/data/presets";
 
 const CATEGORY_ORDER = [
   "SNS",
+  "コミュニケーション",
   "動画 / 配信",
   "創作 / 投稿",
   "クリエイター支援 / ファンコミュニティ",
