@@ -57,10 +57,10 @@ export function YouTubeCardPreview({
     const drawHeight = image.naturalHeight * baseScale * (zoom / 100);
 
     ctx.save();
-    ctx.translate(outputWidth / 2, outputHeight / 2);
+    ctx.translate(outputWidth / 2 + offsetX, outputHeight / 2 + offsetY);
     ctx.rotate((rotation * Math.PI) / 180);
     ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
-    ctx.drawImage(image, -drawWidth / 2 + offsetX, -drawHeight / 2 + offsetY, drawWidth, drawHeight);
+    ctx.drawImage(image, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
     ctx.restore();
   }, [zoom, offsetX, offsetY, rotation, flipX, flipY, preset]);
 

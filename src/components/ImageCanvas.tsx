@@ -172,10 +172,10 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         const drawHeight = image.naturalHeight * baseScale * (zoom / 100);
 
         context.save();
-        context.translate(canvas.width / 2, canvas.height / 2);
+        context.translate(canvas.width / 2 + offsetX, canvas.height / 2 + offsetY);
         context.rotate((rotation * Math.PI) / 180);
         context.scale(flipX ? -1 : 1, flipY ? -1 : 1);
-        context.drawImage(image, -drawWidth / 2 + offsetX, -drawHeight / 2 + offsetY, drawWidth, drawHeight);
+        context.drawImage(image, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
         context.restore();
       } else if (options.includePlaceholder) {
         context.fillStyle = "#d4d4d8";
