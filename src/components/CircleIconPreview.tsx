@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import type { Preset } from "@/types/preset";
+import { screenToLocalOffset } from "@/lib/canvas";
 
 type CircleIconPreviewProps = {
   imageUrl: string | null;
@@ -57,11 +58,12 @@ export function CircleIconPreview({
       const drawWidth = image.naturalWidth * baseScale * (zoom / 100) * previewScale;
       const drawHeight = image.naturalHeight * baseScale * (zoom / 100) * previewScale;
 
+      const { lx, ly } = screenToLocalOffset(offsetX * previewScale, offsetY * previewScale, rotation, flipX, flipY);
       ctx.save();
-      ctx.translate(PREVIEW_SIZE / 2 + offsetX * previewScale, PREVIEW_SIZE / 2 + offsetY * previewScale);
+      ctx.translate(PREVIEW_SIZE / 2, PREVIEW_SIZE / 2);
       ctx.rotate((rotation * Math.PI) / 180);
       ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
-      ctx.drawImage(image, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
+      ctx.drawImage(image, -drawWidth / 2 + lx, -drawHeight / 2 + ly, drawWidth, drawHeight);
       ctx.restore();
     }
 
