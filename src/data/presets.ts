@@ -966,6 +966,80 @@ export const presets: Preset[] = [
       "表示場所によって見切れの範囲が変わる可能性があります。重要な要素は中央寄りに配置してください。",
     ],
   },
+  {
+    id: "facebook-page-cover",
+    service: "Facebook",
+    name: "ページカバー",
+    outputWidth: 851,
+    outputHeight: 315,
+    description:
+      "Facebookページのカバー画像向けプリセットです。横長のカバー画像として見切れを確認します。",
+    notes: [
+      "PCとスマホで表示範囲が異なる場合があるため、重要な文字やロゴは中央寄りに配置するのがおすすめです。",
+      "左下付近にはプロフィール画像が重なる場合があります。",
+    ],
+  },
+  {
+    id: "facebook-profile-image",
+    service: "Facebook",
+    name: "プロフィール画像",
+    outputWidth: 320,
+    outputHeight: 320,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 320,
+      height: 320,
+    },
+    guideShape: "circle",
+    description:
+      "Facebookプロフィール画像向けプリセットです。丸く表示されることを想定して、中央配置と外周の見切れを確認します。",
+    notes: [
+      "実際の表示では円形にトリミングされるため、四隅や外周には重要な情報を置かない方が安全です。",
+      "顔・ロゴ・文字などの重要要素は中央に大きく配置するのがおすすめです。",
+    ],
+  },
+  {
+    id: "fantia-eye-catch",
+    service: "Fantia",
+    name: "アイキャッチ（暫定）",
+    outputWidth: 688,
+    outputHeight: 387,
+    description:
+      "Fantiaのアイキャッチ画像向けの暫定プリセットです。横幅688px・16:9目安のサイズで見切れを確認します。",
+    notes: [
+      "Fantia公式では横幅688px以上がきれいに表示されやすいとされています。高さ・比率は目安です。",
+      "このプリセットは暫定設定です。実際のFantia表示を見ながら後で調整してください。",
+      "重要な文字や顔は中央寄りに配置するのがおすすめです。",
+    ],
+  },
+  {
+    id: "fansly-header",
+    service: "Fansly",
+    name: "ヘッダー",
+    outputWidth: 3261,
+    outputHeight: 1126,
+    description:
+      "Fanslyのヘッダー画像向けプリセットです。横長のバナーとして見切れを確認します。",
+    notes: [
+      "横長表示のため、ロゴ・文字・顔などの重要要素は中央寄りに配置するのがおすすめです。",
+      "端末や表示環境によって左右端が見切れる可能性があります。",
+    ],
+  },
+  {
+    id: "onlyfans-banner",
+    service: "OnlyFans",
+    name: "バナー（暫定）",
+    outputWidth: 1797,
+    outputHeight: 540,
+    description:
+      "OnlyFansのバナー画像向けの暫定プリセットです。複数のサイズ情報があるため目安として設定しています。",
+    notes: [
+      "OnlyFansのバナーサイズは複数の情報があり確定しづらいため、暫定プリセットとして扱っています。",
+      "重要な文字や顔は中央寄りに配置するのがおすすめです。",
+      "実際の表示を確認しながら位置調整してください。",
+    ],
+  },
 ];
 
 export const serviceCategories: Record<string, string> = {
@@ -974,6 +1048,7 @@ export const serviceCategories: Record<string, string> = {
   TikTok: "SNS",
   Bluesky: "SNS",
   Misskey: "SNS",
+  Facebook: "SNS",
   YouTube: "動画 / 配信",
   Twitch: "動画 / 配信",
   pixiv: "創作 / 投稿",
@@ -982,6 +1057,9 @@ export const serviceCategories: Record<string, string> = {
   "Ci-en": "創作 / 投稿",
   Skeb: "創作 / 投稿",
   note: "創作 / 投稿",
+  Fantia: "クリエイター支援 / ファンコミュニティ",
+  Fansly: "クリエイター支援 / ファンコミュニティ",
+  OnlyFans: "クリエイター支援 / ファンコミュニティ",
   SoundCloud: "音楽",
   Steam: "ゲーム / ストア",
   "itch.io": "ゲーム / ストア",
