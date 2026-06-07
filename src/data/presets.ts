@@ -940,6 +940,32 @@ export const presets: Preset[] = [
       "重要な文字や顔は中央寄せにしてください。",
     ],
   },
+  {
+    id: "vrchat-world-thumbnail",
+    service: "VRChat",
+    name: "World Thumbnail",
+    outputWidth: 1200,
+    outputHeight: 900,
+    description:
+      "VRChatのワールドサムネイル向けプリセットです。VRChat Wikiで案内されている1200×900px（4:3）のサイズで見切れを確認します。",
+    notes: [
+      "ワールド名や主要ビジュアルは中央寄りに配置するのがおすすめです。",
+      "サムネイルとして縮小表示されるため、細かい文字や細い線は見えにくくなる場合があります。",
+    ],
+  },
+  {
+    id: "vrchat-group-banner",
+    service: "VRChat",
+    name: "Group Banner（暫定）",
+    outputWidth: 1920,
+    outputHeight: 1080,
+    description:
+      "VRChatのグループバナー向けの暫定プリセットです。表示場所によってトリミングが変わる可能性があります。",
+    notes: [
+      "VRChat公式に明確なバナーサイズの案内が確認しづらいため、16:9の目安として設定しています。",
+      "表示場所によって見切れの範囲が変わる可能性があります。重要な要素は中央寄りに配置してください。",
+    ],
+  },
 ];
 
 export const serviceCategories: Record<string, string> = {
@@ -959,6 +985,7 @@ export const serviceCategories: Record<string, string> = {
   SoundCloud: "音楽",
   Steam: "ゲーム / ストア",
   "itch.io": "ゲーム / ストア",
+  VRChat: "ゲーム / ストア",
   GitHub: "開発 / その他",
   Discord: "開発 / その他",
 };
