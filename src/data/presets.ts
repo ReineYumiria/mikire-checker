@@ -390,6 +390,60 @@ export const presets: Preset[] = [
     ],
   },
   {
+    id: "spotify-artist-header",
+    service: "Spotify",
+    name: "Artist Header",
+    outputWidth: 2660,
+    outputHeight: 1140,
+    safeArea: {
+      x: 266,
+      y: 114,
+      width: 2128,
+      height: 912,
+    },
+    guideShape: "rect",
+    description:
+      "Spotifyアーティストプロフィールのヘッダー画像向けプリセットです。横長のバナーとして見切れを確認します。",
+    notes: [
+      "表示環境や端末によって上下左右が一部見切れる可能性があります。重要な文字やロゴは中央寄りに配置するのがおすすめです。",
+      "アーティスト名が上下に表示される場合があるため、重要な要素はバナー中央付近に収めると安全です。",
+    ],
+  },
+  {
+    id: "spotify-image-gallery",
+    service: "Spotify",
+    name: "Image Gallery",
+    outputWidth: 690,
+    outputHeight: 500,
+    safeArea: {
+      x: 69,
+      y: 50,
+      width: 552,
+      height: 400,
+    },
+    guideShape: "rect",
+    description:
+      "Spotifyアーティストの画像ギャラリー向けプリセットです。横長画像として見切れを確認します。",
+    notes: [
+      "ギャラリー画像は縮小表示されることがあるため、重要な文字やビジュアルは中央寄りに配置するのがおすすめです。",
+      "上下左右の端に重要要素を寄せすぎない方が安全です。",
+    ],
+  },
+  {
+    id: "spotify-cover-art",
+    service: "Spotify",
+    name: "Cover Art",
+    outputWidth: 3000,
+    outputHeight: 3000,
+    description:
+      "Spotifyのアルバム / シングル等のカバーアート向けプリセットです。正方形画像として見切れを確認します。",
+    notes: [
+      "Spotifyでは3000×3000pxの正方形JPEGが推奨されています。",
+      "サムネイルとして小さく表示されるため、タイトルやロゴは大きめに配置するのがおすすめです。",
+      "上下左右の端に重要要素を寄せすぎない方が安全です。",
+    ],
+  },
+  {
     id: "twitch-profile-image",
     service: "Twitch",
     name: "プロフィール画像",
@@ -1221,6 +1275,7 @@ export const serviceCategories: Record<string, string> = {
   Fansly: "クリエイター支援 / ファンコミュニティ",
   OnlyFans: "クリエイター支援 / ファンコミュニティ",
   SoundCloud: "音楽",
+  Spotify: "音楽",
   Steam: "ゲーム / ストア",
   "itch.io": "ゲーム / ストア",
   VRChat: "ゲーム / ストア",

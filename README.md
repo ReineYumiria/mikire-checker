@@ -93,6 +93,12 @@ https://mikire-checker.vercel.app/
 - トラック / プレイリスト画像
 - 配信用アートワーク
 
+### Spotify
+
+- Artist Header
+- Image Gallery
+- Cover Art
+
 ### Twitch
 
 - プロフィール画像
