@@ -147,6 +147,11 @@ https://mikire-checker.vercel.app/
 - クリエイター / マガジンヘッダー
 - プロフィールアイコン
 
+### VRChat
+
+- World Thumbnail（1200×900）
+- Group Banner（1920×1080 暫定）
+
 ## 使い方
 
 1. 「画像を選択」から画像ファイルをアップロードします
