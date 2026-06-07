@@ -136,10 +136,23 @@ export function ControlPanel({
             onChange={(event) => onZoomChange(Number(event.target.value))}
             className="w-full"
           />
-          <div className="mt-1 flex justify-between text-xs text-zinc-500">
-            <span>50%</span>
-            <span>{zoom}%</span>
-            <span>1000%</span>
+          <div className="mt-1 flex items-center justify-between gap-2">
+            <span className="text-xs text-zinc-500">50%</span>
+            <input
+              type="number"
+              min="50"
+              max="1000"
+              step="1"
+              value={zoom}
+              onChange={(event) => {
+                const val = Number(event.target.value);
+                if (!isNaN(val)) {
+                  onZoomChange(Math.max(50, Math.min(1000, Math.round(val))));
+                }
+              }}
+              className="w-20 rounded border border-zinc-700 bg-zinc-950 px-2 py-1 text-center text-xs text-zinc-100 outline-none focus:border-sky-500"
+            />
+            <span className="text-xs text-zinc-500">1000%</span>
           </div>
         </div>
 

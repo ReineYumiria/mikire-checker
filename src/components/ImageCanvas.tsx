@@ -49,11 +49,13 @@ type ImageCanvasProps = {
   setZoom: Dispatch<SetStateAction<number>>;
   setOffsetX: Dispatch<SetStateAction<number>>;
   setOffsetY: Dispatch<SetStateAction<number>>;
+  setRotation: Dispatch<SetStateAction<number>>;
 };
 
 const MIN_ZOOM = 50;
 const MAX_ZOOM = 1000;
 const WHEEL_ZOOM_STEP = 10;
+const WHEEL_ROTATION_STEP = 3;
 
 export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
   function ImageCanvas(
@@ -71,6 +73,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       setZoom,
       setOffsetX,
       setOffsetY,
+      setRotation,
     },
     ref,
   ) {
@@ -169,10 +172,10 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         const drawHeight = image.naturalHeight * baseScale * (zoom / 100);
 
         context.save();
-        context.translate(canvas.width / 2 + offsetX, canvas.height / 2 + offsetY);
+        context.translate(canvas.width / 2, canvas.height / 2);
         context.rotate((rotation * Math.PI) / 180);
         context.scale(flipX ? -1 : 1, flipY ? -1 : 1);
-        context.drawImage(image, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
+        context.drawImage(image, -drawWidth / 2 + offsetX, -drawHeight / 2 + offsetY, drawWidth, drawHeight);
         context.restore();
       } else if (options.includePlaceholder) {
         context.fillStyle = "#d4d4d8";
@@ -394,6 +397,14 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       }
 
       event.preventDefault();
+
+      if (event.shiftKey) {
+        const direction = event.deltaY < 0 ? 1 : -1;
+        setRotation((current) =>
+          Math.max(-180, Math.min(180, current + direction * WHEEL_ROTATION_STEP)),
+        );
+        return;
+      }
 
       const direction = event.deltaY < 0 ? 1 : -1;
       const nextZoom = Math.min(

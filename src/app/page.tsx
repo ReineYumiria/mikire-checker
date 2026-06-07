@@ -225,6 +225,7 @@ export default function Home() {
               setZoom={setZoom}
               setOffsetX={setOffsetX}
               setOffsetY={setOffsetY}
+              setRotation={setRotation}
             />
           </div>
 

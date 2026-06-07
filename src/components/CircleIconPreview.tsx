@@ -58,13 +58,10 @@ export function CircleIconPreview({
       const drawHeight = image.naturalHeight * baseScale * (zoom / 100) * previewScale;
 
       ctx.save();
-      ctx.translate(
-        PREVIEW_SIZE / 2 + offsetX * previewScale,
-        PREVIEW_SIZE / 2 + offsetY * previewScale,
-      );
+      ctx.translate(PREVIEW_SIZE / 2, PREVIEW_SIZE / 2);
       ctx.rotate((rotation * Math.PI) / 180);
       ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
-      ctx.drawImage(image, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
+      ctx.drawImage(image, -drawWidth / 2 + offsetX * previewScale, -drawHeight / 2 + offsetY * previewScale, drawWidth, drawHeight);
       ctx.restore();
     }
 
