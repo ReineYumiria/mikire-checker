@@ -404,6 +404,27 @@ export const presets: Preset[] = [
     ],
   },
   {
+    id: "pixiv-profile-image",
+    service: "pixiv",
+    name: "プロフィール画像（暫定）",
+    outputWidth: 500,
+    outputHeight: 500,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 500,
+      height: 500,
+    },
+    guideShape: "circle",
+    description:
+      "pixivのプロフィール画像向けの暫定プリセットです。円形表示を想定して、外周の見切れを確認します。",
+    notes: [
+      "pixiv公式ヘルプでは最大ファイルサイズが5MBと案内されていますが、推奨ピクセル数の明確な案内が確認しづらいため、500×500の暫定プリセットとして設定しています。",
+      "実際の表示では円形にトリミングされるため、四隅や外周には重要な情報を置かない方が安全です。",
+      "顔・ロゴ・文字などの重要要素は中央に大きく配置するのがおすすめです。",
+    ],
+  },
+  {
     id: "pixiv-profile-cover",
     service: "pixiv",
     name: "プロフィールカバー",
@@ -941,6 +962,41 @@ export const presets: Preset[] = [
     ],
   },
   {
+    id: "mastodon-avatar",
+    service: "Mastodon",
+    name: "Avatar",
+    outputWidth: 400,
+    outputHeight: 400,
+    safeArea: {
+      x: 0,
+      y: 0,
+      width: 400,
+      height: 400,
+    },
+    guideShape: "circle",
+    description:
+      "Mastodonのアバター画像向けプリセットです。公式ドキュメントで400×400pxに縮小されることが案内されています。円形または丸みのある表示を想定して、外周の見切れを確認します。",
+    notes: [
+      "Mastodonはインスタンスやクライアントによって表示が異なる場合があります。",
+      "円形または角丸での表示を想定して、四隅や外周には重要な情報を置かない方が安全です。",
+      "顔・ロゴ・文字などの重要要素は中央に大きく配置するのがおすすめです。",
+    ],
+  },
+  {
+    id: "mastodon-header",
+    service: "Mastodon",
+    name: "Header",
+    outputWidth: 1500,
+    outputHeight: 500,
+    description:
+      "Mastodonのヘッダー画像向けプリセットです。公式ドキュメントで1500×500pxに縮小されることが案内されています。",
+    notes: [
+      "Mastodonはインスタンスやクライアントによって表示が異なる場合があります。",
+      "横長のヘッダー画像のため、重要な文字や顔は中央寄りに配置するのがおすすめです。",
+      "端末や表示環境によって端が見切れる可能性があります。",
+    ],
+  },
+  {
     id: "vrchat-world-thumbnail",
     service: "VRChat",
     name: "World Thumbnail",
@@ -1048,6 +1104,7 @@ export const serviceCategories: Record<string, string> = {
   TikTok: "SNS",
   Bluesky: "SNS",
   Misskey: "SNS",
+  Mastodon: "SNS",
   Facebook: "SNS",
   YouTube: "動画 / 配信",
   Twitch: "動画 / 配信",
