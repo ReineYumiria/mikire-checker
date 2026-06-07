@@ -8,6 +8,9 @@ type CircleIconPreviewProps = {
   zoom: number;
   offsetX: number;
   offsetY: number;
+  rotation: number;
+  flipX: boolean;
+  flipY: boolean;
   preset: Preset;
 };
 
@@ -18,6 +21,9 @@ export function CircleIconPreview({
   zoom,
   offsetX,
   offsetY,
+  rotation,
+  flipX,
+  flipY,
   preset,
 }: CircleIconPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -50,13 +56,20 @@ export function CircleIconPreview({
       );
       const drawWidth = image.naturalWidth * baseScale * (zoom / 100) * previewScale;
       const drawHeight = image.naturalHeight * baseScale * (zoom / 100) * previewScale;
-      const drawX = (PREVIEW_SIZE - drawWidth) / 2 + offsetX * previewScale;
-      const drawY = (PREVIEW_SIZE - drawHeight) / 2 + offsetY * previewScale;
-      ctx.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+
+      ctx.save();
+      ctx.translate(
+        PREVIEW_SIZE / 2 + offsetX * previewScale,
+        PREVIEW_SIZE / 2 + offsetY * previewScale,
+      );
+      ctx.rotate((rotation * Math.PI) / 180);
+      ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+      ctx.drawImage(image, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
+      ctx.restore();
     }
 
     ctx.restore();
-  }, [zoom, offsetX, offsetY, preset]);
+  }, [zoom, offsetX, offsetY, rotation, flipX, flipY, preset]);
 
   useEffect(() => {
     if (!imageUrl) {

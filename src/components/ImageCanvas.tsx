@@ -42,6 +42,9 @@ type ImageCanvasProps = {
   zoom: number;
   offsetX: number;
   offsetY: number;
+  rotation: number;
+  flipX: boolean;
+  flipY: boolean;
   showSafeAreaGuide: boolean;
   setZoom: Dispatch<SetStateAction<number>>;
   setOffsetX: Dispatch<SetStateAction<number>>;
@@ -61,6 +64,9 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       zoom,
       offsetX,
       offsetY,
+      rotation,
+      flipX,
+      flipY,
       showSafeAreaGuide,
       setZoom,
       setOffsetX,
@@ -114,7 +120,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
     useEffect(() => {
       drawCanvas();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [preset, zoom, offsetX, offsetY, imageFileName, showSafeAreaGuide]);
+    }, [preset, zoom, offsetX, offsetY, rotation, flipX, flipY, imageFileName, showSafeAreaGuide]);
 
     const drawCanvas = () => {
       const canvas = canvasRef.current;
@@ -162,10 +168,12 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         const drawWidth = image.naturalWidth * baseScale * (zoom / 100);
         const drawHeight = image.naturalHeight * baseScale * (zoom / 100);
 
-        const drawX = (canvas.width - drawWidth) / 2 + offsetX;
-        const drawY = (canvas.height - drawHeight) / 2 + offsetY;
-
-        context.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+        context.save();
+        context.translate(canvas.width / 2 + offsetX, canvas.height / 2 + offsetY);
+        context.rotate((rotation * Math.PI) / 180);
+        context.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+        context.drawImage(image, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
+        context.restore();
       } else if (options.includePlaceholder) {
         context.fillStyle = "#d4d4d8";
         context.font = "28px sans-serif";

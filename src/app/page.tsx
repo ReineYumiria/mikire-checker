@@ -43,6 +43,9 @@ export default function Home() {
   const [zoom, setZoom] = useState(100);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
+  const [rotation, setRotation] = useState(0);
+  const [flipX, setFlipX] = useState(false);
+  const [flipY, setFlipY] = useState(false);
   const [showSafeAreaGuide, setShowSafeAreaGuide] = useState(true);
   const [includeGuideInExport, setIncludeGuideInExport] = useState(false);
   const [saveMethod, setSaveMethod] = useState<"download" | "picker">("download");
@@ -74,6 +77,9 @@ export default function Home() {
     setZoom(100);
     setOffsetX(0);
     setOffsetY(0);
+    setRotation(0);
+    setFlipX(false);
+    setFlipY(false);
   };
 
   const handleZoomChange = (nextZoom: number) => {
@@ -169,6 +175,9 @@ export default function Home() {
           imageUrl={imageUrl}
           imageFileName={imageFileName}
           zoom={zoom}
+          rotation={rotation}
+          flipX={flipX}
+          flipY={flipY}
           showSafeAreaGuide={showSafeAreaGuide}
           includeGuideInExport={includeGuideInExport}
           saveMethod={saveMethod}
@@ -177,6 +186,9 @@ export default function Home() {
           onServiceChange={handleServiceChange}
           onPresetChange={handlePresetChange}
           onZoomChange={handleZoomChange}
+          onRotationChange={setRotation}
+          onFlipXChange={setFlipX}
+          onFlipYChange={setFlipY}
           onShowSafeAreaGuideChange={setShowSafeAreaGuide}
           onIncludeGuideInExportChange={setIncludeGuideInExport}
           onSaveMethodChange={setSaveMethod}
@@ -206,6 +218,9 @@ export default function Home() {
               zoom={zoom}
               offsetX={offsetX}
               offsetY={offsetY}
+              rotation={rotation}
+              flipX={flipX}
+              flipY={flipY}
               showSafeAreaGuide={showSafeAreaGuide}
               setZoom={setZoom}
               setOffsetX={setOffsetX}
@@ -219,6 +234,9 @@ export default function Home() {
               zoom={zoom}
               offsetX={offsetX}
               offsetY={offsetY}
+              rotation={rotation}
+              flipX={flipX}
+              flipY={flipY}
               preset={selectedPreset}
             />
           )}
@@ -229,6 +247,9 @@ export default function Home() {
               zoom={zoom}
               offsetX={offsetX}
               offsetY={offsetY}
+              rotation={rotation}
+              flipX={flipX}
+              flipY={flipY}
               preset={selectedPreset}
             />
           )}

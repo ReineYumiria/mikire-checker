@@ -10,6 +10,9 @@ type ControlPanelProps = {
   imageUrl: string | null;
   imageFileName: string | null;
   zoom: number;
+  rotation: number;
+  flipX: boolean;
+  flipY: boolean;
   showSafeAreaGuide: boolean;
   includeGuideInExport: boolean;
   saveMethod: "download" | "picker";
@@ -18,6 +21,9 @@ type ControlPanelProps = {
   onServiceChange: (service: string) => void;
   onPresetChange: (presetId: string) => void;
   onZoomChange: (zoom: number) => void;
+  onRotationChange: (rotation: number) => void;
+  onFlipXChange: (flip: boolean) => void;
+  onFlipYChange: (flip: boolean) => void;
   onShowSafeAreaGuideChange: (show: boolean) => void;
   onIncludeGuideInExportChange: (include: boolean) => void;
   onSaveMethodChange: (method: "download" | "picker") => void;
@@ -33,6 +39,9 @@ export function ControlPanel({
   imageUrl,
   imageFileName,
   zoom,
+  rotation,
+  flipX,
+  flipY,
   showSafeAreaGuide,
   includeGuideInExport,
   saveMethod,
@@ -41,6 +50,9 @@ export function ControlPanel({
   onServiceChange,
   onPresetChange,
   onZoomChange,
+  onRotationChange,
+  onFlipXChange,
+  onFlipYChange,
   onShowSafeAreaGuideChange,
   onIncludeGuideInExportChange,
   onSaveMethodChange,
@@ -129,6 +141,59 @@ export function ControlPanel({
             <span>{zoom}%</span>
             <span>1000%</span>
           </div>
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-medium text-zinc-300">
+            回転
+          </label>
+          <input
+            type="range"
+            min="-180"
+            max="180"
+            value={rotation}
+            onChange={(event) => onRotationChange(Number(event.target.value))}
+            className="w-full"
+          />
+          <div className="mt-1 flex items-center justify-between gap-2">
+            <span className="text-xs text-zinc-500">-180°</span>
+            <input
+              type="number"
+              min="-180"
+              max="180"
+              step="1"
+              value={rotation}
+              onChange={(event) => {
+                const val = Number(event.target.value);
+                if (!isNaN(val)) {
+                  onRotationChange(Math.max(-180, Math.min(180, Math.round(val))));
+                }
+              }}
+              className="w-16 rounded border border-zinc-700 bg-zinc-950 px-2 py-1 text-center text-xs text-zinc-100 outline-none focus:border-sky-500"
+            />
+            <span className="text-xs text-zinc-500">180°</span>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-800">
+            <input
+              type="checkbox"
+              checked={flipX}
+              onChange={(event) => onFlipXChange(event.target.checked)}
+              className="h-4 w-4 accent-sky-500"
+            />
+            <span>左右反転</span>
+          </label>
+          <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-800">
+            <input
+              type="checkbox"
+              checked={flipY}
+              onChange={(event) => onFlipYChange(event.target.checked)}
+              className="h-4 w-4 accent-sky-500"
+            />
+            <span>上下反転</span>
+          </label>
         </div>
 
         <div className="space-y-2">

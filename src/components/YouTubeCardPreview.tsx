@@ -8,6 +8,9 @@ type YouTubeCardPreviewProps = {
   zoom: number;
   offsetX: number;
   offsetY: number;
+  rotation: number;
+  flipX: boolean;
+  flipY: boolean;
   preset: Preset;
 };
 
@@ -19,6 +22,9 @@ export function YouTubeCardPreview({
   zoom,
   offsetX,
   offsetY,
+  rotation,
+  flipX,
+  flipY,
   preset,
 }: YouTubeCardPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -49,11 +55,14 @@ export function YouTubeCardPreview({
     );
     const drawWidth = image.naturalWidth * baseScale * (zoom / 100);
     const drawHeight = image.naturalHeight * baseScale * (zoom / 100);
-    const drawX = (outputWidth - drawWidth) / 2 + offsetX;
-    const drawY = (outputHeight - drawHeight) / 2 + offsetY;
 
-    ctx.drawImage(image, drawX, drawY, drawWidth, drawHeight);
-  }, [zoom, offsetX, offsetY, preset]);
+    ctx.save();
+    ctx.translate(outputWidth / 2 + offsetX, outputHeight / 2 + offsetY);
+    ctx.rotate((rotation * Math.PI) / 180);
+    ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+    ctx.drawImage(image, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
+    ctx.restore();
+  }, [zoom, offsetX, offsetY, rotation, flipX, flipY, preset]);
 
   useEffect(() => {
     if (!imageUrl) {
