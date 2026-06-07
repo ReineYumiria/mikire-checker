@@ -11,8 +11,24 @@ import {
 } from "react";
 import type { Preset } from "@/types/preset";
 
+type SaveFilePickerOptions = {
+  suggestedName?: string;
+  types?: Array<{ description?: string; accept: Record<string, string[]> }>;
+};
+
+type FileSystemWritableFileStream = {
+  write(data: Blob): Promise<void>;
+  close(): Promise<void>;
+};
+
+type FileSystemFileHandle = {
+  createWritable(): Promise<FileSystemWritableFileStream>;
+};
+
 type ExportPngOptions = {
   includeSafeAreaGuide: boolean;
+  saveMethod?: "download" | "picker";
+  onPickerFallback?: () => void;
 };
 
 export type ImageCanvasHandle = {
@@ -263,19 +279,49 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         includePlaceholder: false,
       });
 
-      exportCanvas.toBlob((blob) => {
+      exportCanvas.toBlob(async (blob) => {
         if (!blob) {
           alert("PNG書き出しに失敗しました。");
           return;
         }
 
+        if (options.saveMethod === "picker") {
+          const pickerFn = (
+            window as unknown as {
+              showSaveFilePicker?: (
+                opts: SaveFilePickerOptions,
+              ) => Promise<FileSystemFileHandle>;
+            }
+          ).showSaveFilePicker;
+
+          if (typeof pickerFn === "function") {
+            try {
+              const handle = await pickerFn({
+                suggestedName: fileName,
+                types: [
+                  { description: "PNG画像", accept: { "image/png": [".png"] } },
+                ],
+              });
+              const writable = await handle.createWritable();
+              await writable.write(blob);
+              await writable.close();
+              return;
+            } catch (err) {
+              if (err instanceof DOMException && err.name === "AbortError") {
+                return;
+              }
+              // Other errors fall through to regular download
+            }
+          } else {
+            options.onPickerFallback?.();
+          }
+        }
+
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
-
         link.href = url;
         link.download = fileName;
         link.click();
-
         URL.revokeObjectURL(url);
       }, "image/png");
     };

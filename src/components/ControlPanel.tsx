@@ -12,12 +12,15 @@ type ControlPanelProps = {
   zoom: number;
   showSafeAreaGuide: boolean;
   includeGuideInExport: boolean;
+  saveMethod: "download" | "picker";
+  pickerFallbackMessage: string | null;
   onImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onServiceChange: (service: string) => void;
   onPresetChange: (presetId: string) => void;
   onZoomChange: (zoom: number) => void;
   onShowSafeAreaGuideChange: (show: boolean) => void;
   onIncludeGuideInExportChange: (include: boolean) => void;
+  onSaveMethodChange: (method: "download" | "picker") => void;
   onResetPosition: () => void;
   onExportPng: () => void;
 };
@@ -32,12 +35,15 @@ export function ControlPanel({
   zoom,
   showSafeAreaGuide,
   includeGuideInExport,
+  saveMethod,
+  pickerFallbackMessage,
   onImageChange,
   onServiceChange,
   onPresetChange,
   onZoomChange,
   onShowSafeAreaGuideChange,
   onIncludeGuideInExportChange,
+  onSaveMethodChange,
   onResetPosition,
   onExportPng,
 }: ControlPanelProps) {
@@ -159,14 +165,47 @@ export function ControlPanel({
           位置をリセット
         </button>
 
-        <button
-          type="button"
-          onClick={onExportPng}
-          disabled={!imageUrl}
-          className="w-full rounded-lg bg-sky-500 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-400 disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-400"
-        >
-          PNGで書き出し
-        </button>
+        <div>
+          <p className="mb-2 text-sm font-medium text-zinc-300">保存方法</p>
+          <div className="space-y-1">
+            <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-800">
+              <input
+                type="radio"
+                name="saveMethod"
+                value="download"
+                checked={saveMethod === "download"}
+                onChange={() => onSaveMethodChange("download")}
+                className="accent-sky-500"
+              />
+              <span>通常ダウンロード</span>
+            </label>
+            <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-800">
+              <input
+                type="radio"
+                name="saveMethod"
+                value="picker"
+                checked={saveMethod === "picker"}
+                onChange={() => onSaveMethodChange("picker")}
+                className="accent-sky-500"
+              />
+              <span>保存先を選んで保存</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <button
+            type="button"
+            onClick={onExportPng}
+            disabled={!imageUrl}
+            className="w-full rounded-lg bg-sky-500 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-400 disabled:cursor-not-allowed disabled:bg-zinc-700 disabled:text-zinc-400"
+          >
+            PNGで書き出し
+          </button>
+          {pickerFallbackMessage && (
+            <p className="mt-2 text-xs text-zinc-400">{pickerFallbackMessage}</p>
+          )}
+        </div>
       </div>
     </section>
   );

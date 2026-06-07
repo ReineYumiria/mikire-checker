@@ -43,6 +43,8 @@ export default function Home() {
   const [offsetY, setOffsetY] = useState(0);
   const [showSafeAreaGuide, setShowSafeAreaGuide] = useState(true);
   const [includeGuideInExport, setIncludeGuideInExport] = useState(false);
+  const [saveMethod, setSaveMethod] = useState<"download" | "picker">("download");
+  const [pickerFallbackMessage, setPickerFallbackMessage] = useState<string | null>(null);
 
   const imageCanvasRef = useRef<ImageCanvasHandle | null>(null);
 
@@ -123,6 +125,8 @@ export default function Home() {
   };
 
   const handleExportPng = () => {
+    setPickerFallbackMessage(null);
+
     const baseName = imageFileName
       ? imageFileName.replace(/\.[^/.]+$/, "")
       : "mikire-checker";
@@ -132,6 +136,12 @@ export default function Home() {
 
     imageCanvasRef.current?.exportPng(fileName, {
       includeSafeAreaGuide: includeGuideInExport,
+      saveMethod,
+      onPickerFallback: () => {
+        setPickerFallbackMessage(
+          "このブラウザでは保存先選択に対応していないため、通常ダウンロードしました。",
+        );
+      },
     });
   };
 
@@ -159,12 +169,15 @@ export default function Home() {
           zoom={zoom}
           showSafeAreaGuide={showSafeAreaGuide}
           includeGuideInExport={includeGuideInExport}
+          saveMethod={saveMethod}
+          pickerFallbackMessage={pickerFallbackMessage}
           onImageChange={handleImageChange}
           onServiceChange={handleServiceChange}
           onPresetChange={handlePresetChange}
           onZoomChange={handleZoomChange}
           onShowSafeAreaGuideChange={setShowSafeAreaGuide}
           onIncludeGuideInExportChange={setIncludeGuideInExport}
+          onSaveMethodChange={setSaveMethod}
           onResetPosition={resetView}
           onExportPng={handleExportPng}
         />
