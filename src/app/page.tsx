@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
 import { ImageCanvas, type ImageCanvasHandle } from "@/components/ImageCanvas";
 import { AdSlot } from "@/components/AdSlot";
+import { CircleIconPreview } from "@/components/CircleIconPreview";
 import { PresetInfoPanel } from "@/components/PresetInfoPanel";
 import { YouTubeCardPreview } from "@/components/YouTubeCardPreview";
 import { presets, serviceCategories } from "@/data/presets";
@@ -214,6 +215,16 @@ export default function Home() {
 
           {selectedPreset.id === "youtube-thumbnail" && (
             <YouTubeCardPreview
+              imageUrl={imageUrl}
+              zoom={zoom}
+              offsetX={offsetX}
+              offsetY={offsetY}
+              preset={selectedPreset}
+            />
+          )}
+
+          {selectedPreset.guideShape === "circle" && (
+            <CircleIconPreview
               imageUrl={imageUrl}
               zoom={zoom}
               offsetX={offsetX}
