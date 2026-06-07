@@ -72,6 +72,13 @@ export default function Home() {
     setOffsetY(0);
   };
 
+  const handleZoomChange = (nextZoom: number) => {
+    const zoomRatio = nextZoom / zoom;
+    setOffsetX((current) => current * zoomRatio);
+    setOffsetY((current) => current * zoomRatio);
+    setZoom(nextZoom);
+  };
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
@@ -155,7 +162,7 @@ export default function Home() {
           onImageChange={handleImageChange}
           onServiceChange={handleServiceChange}
           onPresetChange={handlePresetChange}
-          onZoomChange={setZoom}
+          onZoomChange={handleZoomChange}
           onShowSafeAreaGuideChange={setShowSafeAreaGuide}
           onIncludeGuideInExportChange={setIncludeGuideInExport}
           onResetPosition={resetView}

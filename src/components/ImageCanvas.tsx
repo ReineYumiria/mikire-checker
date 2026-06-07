@@ -8,7 +8,6 @@ import {
   type Dispatch,
   type PointerEvent,
   type SetStateAction,
-  type WheelEvent,
 } from "react";
 import type { Preset } from "@/types/preset";
 
@@ -335,7 +334,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       };
     };
 
-    const handleWheel = (event: WheelEvent<HTMLCanvasElement>) => {
+    const handleWheel = (event: WheelEvent) => {
       if (!imageUrl) {
         return;
       }
@@ -365,6 +364,18 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       setOffsetY(point.y - canvasCenterY - relativeY * zoomRatio);
       setZoom(nextZoom);
     };
+
+    const handleWheelRef = useRef(handleWheel);
+    handleWheelRef.current = handleWheel;
+
+    useEffect(() => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const handler = (e: WheelEvent) => handleWheelRef.current(e);
+      canvas.addEventListener("wheel", handler, { passive: false });
+      return () => canvas.removeEventListener("wheel", handler);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const startPinchZoom = () => {
       const pointers = Array.from(activePointersRef.current.values());
@@ -523,7 +534,6 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
           maxHeight: "72vh",
           width: `min(100%, calc(72vh * ${preset.outputWidth / preset.outputHeight}))`,
         }}
-        onWheel={handleWheel}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
