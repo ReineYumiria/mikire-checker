@@ -10,7 +10,6 @@ import {
   type SetStateAction,
 } from "react";
 import type { Preset } from "@/types/preset";
-import { screenToLocalOffset } from "@/lib/canvas";
 
 type SaveFilePickerOptions = {
   suggestedName?: string;
@@ -172,12 +171,11 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         const drawWidth = image.naturalWidth * baseScale * (zoom / 100);
         const drawHeight = image.naturalHeight * baseScale * (zoom / 100);
 
-        const { lx, ly } = screenToLocalOffset(offsetX, offsetY, rotation, flipX, flipY);
         context.save();
-        context.translate(canvas.width / 2, canvas.height / 2);
+        context.translate(canvas.width / 2 + offsetX, canvas.height / 2 + offsetY);
         context.rotate((rotation * Math.PI) / 180);
         context.scale(flipX ? -1 : 1, flipY ? -1 : 1);
-        context.drawImage(image, -drawWidth / 2 + lx, -drawHeight / 2 + ly, drawWidth, drawHeight);
+        context.drawImage(image, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
         context.restore();
       } else if (options.includePlaceholder) {
         context.fillStyle = "#d4d4d8";
@@ -402,7 +400,13 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
 
       if (event.shiftKey) {
         const direction = event.deltaY < 0 ? 1 : -1;
-        setRotation((current) => current + direction * WHEEL_ROTATION_STEP);
+        const delta = direction * WHEEL_ROTATION_STEP;
+        const rad = (delta * Math.PI) / 180;
+        const cos = Math.cos(rad);
+        const sin = Math.sin(rad);
+        setRotation((current) => current + delta);
+        setOffsetX(offsetX * cos - offsetY * sin);
+        setOffsetY(offsetX * sin + offsetY * cos);
         return;
       }
 
