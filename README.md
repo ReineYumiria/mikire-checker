@@ -35,6 +35,7 @@ https://mikire-checker.vercel.app/
 - 保存先を選んで保存は Chrome / Edge に対応。非対応ブラウザでは通常ダウンロードになります
 - PC / スマホの両方で利用できます
 - YouTube サムネイル選択時にホーム風カードプレビューを表示できます（試作）
+- 円形アイコン系プリセット選択時に円形表示プレビューを確認できます（`guideShape: "circle"` 対象プリセットで自動表示）
 - 収益化準備として広告枠を設置しています（`AdSlot` コンポーネント経由で管理）
 - 開発環境や広告表示用の環境変数未設定時はプレースホルダー表示になります
 - AdSense 所有権確認用の client ID は `NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT` で管理します
@@ -87,6 +88,7 @@ https://mikire-checker.vercel.app/
 
 ### pixiv
 
+- プロフィール画像（暫定・円形表示プレビューあり）
 - プロフィールカバー
 - マンガシリーズカバー
 - 検索サムネイル 正方形
@@ -126,6 +128,11 @@ https://mikire-checker.vercel.app/
 
 - アイコン（目安）
 - バナー（目安）
+
+### Mastodon
+
+- Avatar（円形表示プレビューあり）
+- Header
 
 ### Facebook
 
