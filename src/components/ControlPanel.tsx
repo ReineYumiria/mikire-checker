@@ -1,5 +1,10 @@
 import type { Preset } from "@/types/preset";
 
+const normalizeAngle = (angle: number): number => {
+  const mod = ((angle % 360) + 360) % 360;
+  return mod > 180 ? mod - 360 : mod;
+};
+
 type ServiceGroup = { category: string; services: string[] };
 
 type ControlPanelProps = {
@@ -164,7 +169,7 @@ export function ControlPanel({
             type="range"
             min="-180"
             max="180"
-            value={rotation}
+            value={normalizeAngle(rotation)}
             onChange={(event) => onRotationChange(Number(event.target.value))}
             className="w-full"
           />
@@ -172,14 +177,12 @@ export function ControlPanel({
             <span className="text-xs text-zinc-500">-180°</span>
             <input
               type="number"
-              min="-180"
-              max="180"
               step="1"
               value={rotation}
               onChange={(event) => {
                 const val = Number(event.target.value);
                 if (!isNaN(val)) {
-                  onRotationChange(Math.max(-180, Math.min(180, Math.round(val))));
+                  onRotationChange(Math.round(val));
                 }
               }}
               className="w-16 rounded border border-zinc-700 bg-zinc-950 px-2 py-1 text-center text-xs text-zinc-100 outline-none focus:border-sky-500"

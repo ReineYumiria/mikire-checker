@@ -400,9 +400,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
 
       if (event.shiftKey) {
         const direction = event.deltaY < 0 ? 1 : -1;
-        setRotation((current) =>
-          Math.max(-180, Math.min(180, current + direction * WHEEL_ROTATION_STEP)),
-        );
+        setRotation((current) => current + direction * WHEEL_ROTATION_STEP);
         return;
       }
 
