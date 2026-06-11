@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
+import { ControlPanelAdjustments } from "@/components/ControlPanelAdjustments";
 import { ImageCanvas, type ImageCanvasHandle } from "@/components/ImageCanvas";
 import { AdSlot } from "@/components/AdSlot";
 import { CircleIconPreview } from "@/components/CircleIconPreview";
@@ -201,38 +202,25 @@ export default function Home() {
 
       <div className="mx-auto grid max-w-7xl gap-4 px-6 py-6 lg:grid-cols-[280px_1fr_320px]">
         <ControlPanel
+          className="lg:col-start-1 lg:row-start-1"
           categories={serviceGroups.map((g) => g.category)}
           selectedCategory={selectedCategory}
           servicesInCategory={servicesInCategory}
           presets={servicePresets}
           selectedService={selectedService}
           selectedPresetId={selectedPresetId}
-          imageUrl={imageUrl}
           imageFileName={imageFileName}
           zoom={zoom}
           rotation={rotation}
-          flipX={flipX}
-          flipY={flipY}
-          showSafeAreaGuide={showSafeAreaGuide}
-          includeGuideInExport={includeGuideInExport}
-          saveMethod={saveMethod}
-          pickerFallbackMessage={pickerFallbackMessage}
           onImageChange={handleImageChange}
           onCategoryChange={handleCategoryChange}
           onServiceChange={handleServiceChange}
           onPresetChange={handlePresetChange}
           onZoomChange={handleZoomChange}
           onRotationChange={handleRotationChange}
-          onFlipXChange={setFlipX}
-          onFlipYChange={setFlipY}
-          onShowSafeAreaGuideChange={setShowSafeAreaGuide}
-          onIncludeGuideInExportChange={setIncludeGuideInExport}
-          onSaveMethodChange={setSaveMethod}
-          onResetPosition={resetView}
-          onExportPng={handleExportPng}
         />
 
-        <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
+        <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-4 lg:col-start-2 lg:row-start-1 lg:row-span-2">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
               <h2 className="text-lg font-semibold">プレビュー</h2>
@@ -292,7 +280,25 @@ export default function Home() {
           )}
         </section>
 
-        <div className="flex flex-col gap-4">
+        <ControlPanelAdjustments
+          className="lg:col-start-1 lg:row-start-2"
+          imageUrl={imageUrl}
+          flipX={flipX}
+          flipY={flipY}
+          showSafeAreaGuide={showSafeAreaGuide}
+          includeGuideInExport={includeGuideInExport}
+          saveMethod={saveMethod}
+          pickerFallbackMessage={pickerFallbackMessage}
+          onFlipXChange={setFlipX}
+          onFlipYChange={setFlipY}
+          onShowSafeAreaGuideChange={setShowSafeAreaGuide}
+          onIncludeGuideInExportChange={setIncludeGuideInExport}
+          onSaveMethodChange={setSaveMethod}
+          onResetPosition={resetView}
+          onExportPng={handleExportPng}
+        />
+
+        <div className="flex flex-col gap-4 lg:col-start-3 lg:row-start-1 lg:row-span-2">
           <PresetInfoPanel preset={selectedPreset} />
           <AdSlot
             slotId={process.env.NEXT_PUBLIC_AD_SLOT_SIDEBAR}
