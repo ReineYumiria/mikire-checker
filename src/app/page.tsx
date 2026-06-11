@@ -9,6 +9,7 @@ import { CircleIconPreview } from "@/components/CircleIconPreview";
 import { PresetInfoPanel } from "@/components/PresetInfoPanel";
 import { YouTubeCardPreview } from "@/components/YouTubeCardPreview";
 import { presets, serviceCategories } from "@/data/presets";
+import { rotateOffset } from "@/lib/canvas";
 
 const CATEGORY_ORDER = [
   "SNS",
@@ -95,6 +96,18 @@ export default function Home() {
     setOffsetX((current) => current * zoomRatio);
     setOffsetY((current) => current * zoomRatio);
     setZoom(nextZoom);
+  };
+
+  const handleRotationChange = (nextRotation: number) => {
+    const delta = nextRotation - rotation;
+
+    if (delta !== 0) {
+      const rotated = rotateOffset(offsetX, offsetY, delta);
+      setOffsetX(rotated.offsetX);
+      setOffsetY(rotated.offsetY);
+    }
+
+    setRotation(nextRotation);
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -209,7 +222,7 @@ export default function Home() {
           onServiceChange={handleServiceChange}
           onPresetChange={handlePresetChange}
           onZoomChange={handleZoomChange}
-          onRotationChange={setRotation}
+          onRotationChange={handleRotationChange}
           onFlipXChange={setFlipX}
           onFlipYChange={setFlipY}
           onShowSafeAreaGuideChange={setShowSafeAreaGuide}

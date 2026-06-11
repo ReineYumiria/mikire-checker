@@ -5,6 +5,23 @@ const normalizeAngle = (angle: number): number => {
   return mod > 180 ? mod - 360 : mod;
 };
 
+// Maps a slider value (-180..180) to the nearest continuous rotation via the shortest angular path.
+const sliderValueToRotation = (
+  currentRotation: number,
+  sliderValue: number,
+): number => {
+  const currentNormalized = normalizeAngle(currentRotation);
+  let delta = sliderValue - currentNormalized;
+
+  if (delta > 180) {
+    delta -= 360;
+  } else if (delta < -180) {
+    delta += 360;
+  }
+
+  return currentRotation + delta;
+};
+
 type ControlPanelProps = {
   categories: string[];
   selectedCategory: string;
@@ -187,7 +204,11 @@ export function ControlPanel({
             min="-180"
             max="180"
             value={normalizeAngle(rotation)}
-            onChange={(event) => onRotationChange(Number(event.target.value))}
+            onChange={(event) =>
+              onRotationChange(
+                sliderValueToRotation(rotation, Number(event.target.value)),
+              )
+            }
             className="w-full"
           />
           <div className="mt-1 flex items-center justify-between gap-2">
