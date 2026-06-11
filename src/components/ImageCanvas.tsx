@@ -9,7 +9,7 @@ import {
   type PointerEvent,
   type SetStateAction,
 } from "react";
-import { rotateOffset } from "@/lib/canvas";
+import { normalizeAngle, rotateOffset } from "@/lib/canvas";
 import type { Preset } from "@/types/preset";
 
 type SaveFilePickerOptions = {
@@ -403,7 +403,7 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         const direction = event.deltaY < 0 ? 1 : -1;
         const delta = direction * WHEEL_ROTATION_STEP;
         const rotated = rotateOffset(offsetX, offsetY, delta);
-        setRotation((current) => current + delta);
+        setRotation((current) => normalizeAngle(current + delta));
         setOffsetX(rotated.offsetX);
         setOffsetY(rotated.offsetY);
         return;

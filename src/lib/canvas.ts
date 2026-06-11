@@ -1,5 +1,11 @@
 // Reserved for canvas utilities.
 
+// Normalizes an angle in degrees to the (-180, 180] range.
+export const normalizeAngle = (angle: number): number => {
+  const mod = ((angle % 360) + 360) % 360;
+  return mod > 180 ? mod - 360 : mod;
+};
+
 // Rotates an offset vector so the canvas/preview center stays the rotation pivot.
 export const rotateOffset = (
   offsetX: number,

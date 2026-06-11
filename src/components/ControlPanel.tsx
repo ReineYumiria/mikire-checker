@@ -1,9 +1,5 @@
+import { normalizeAngle } from "@/lib/canvas";
 import type { Preset } from "@/types/preset";
-
-const normalizeAngle = (angle: number): number => {
-  const mod = ((angle % 360) + 360) % 360;
-  return mod > 180 ? mod - 360 : mod;
-};
 
 // Maps a slider value (-180..180) to the nearest continuous rotation via the shortest angular path.
 const sliderValueToRotation = (
