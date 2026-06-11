@@ -87,7 +87,9 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       new Map<number, { clientX: number; clientY: number }>(),
     );
     const pinchStartDistanceRef = useRef<number | null>(null);
+    const pinchStartAngleRef = useRef(0);
     const pinchStartZoomRef = useRef(zoom);
+    const pinchStartRotationRef = useRef(rotation);
     const pinchStartOffsetXRef = useRef(0);
     const pinchStartOffsetYRef = useRef(0);
     const pinchCenterPointRef = useRef({ x: 0, y: 0 });
@@ -392,6 +394,16 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
       };
     };
 
+    const getPointerAngle = (
+      first: { clientX: number; clientY: number },
+      second: { clientX: number; clientY: number },
+    ) => {
+      return Math.atan2(
+        second.clientY - first.clientY,
+        second.clientX - first.clientX,
+      );
+    };
+
     const handleWheel = (event: WheelEvent) => {
       if (!imageUrl) {
         return;
@@ -463,7 +475,9 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         firstPointer,
         secondPointer,
       );
+      pinchStartAngleRef.current = getPointerAngle(firstPointer, secondPointer);
       pinchStartZoomRef.current = zoom;
+      pinchStartRotationRef.current = rotation;
       pinchStartOffsetXRef.current = offsetX;
       pinchStartOffsetYRef.current = offsetY;
       pinchCenterPointRef.current = centerPoint;
@@ -531,19 +545,47 @@ export const ImageCanvas = forwardRef<ImageCanvasHandle, ImageCanvasProps>(
         );
 
         const zoomRatio = nextZoom / pinchStartZoomRef.current;
-        const point = pinchCenterPointRef.current;
+
+        const currentAngle = getPointerAngle(firstPointer, secondPointer);
+        const angleDelta =
+          ((currentAngle - pinchStartAngleRef.current) * 180) / Math.PI;
+        const nextRotation = normalizeAngle(
+          pinchStartRotationRef.current + angleDelta,
+        );
+
+        const center = getPointerCenter(firstPointer, secondPointer);
+        const currentCenterPoint = getCanvasPointFromClient(
+          center.clientX,
+          center.clientY,
+        );
+        const anchorPoint = pinchCenterPointRef.current;
 
         const canvasCenterX = preset.outputWidth / 2;
         const canvasCenterY = preset.outputHeight / 2;
 
-        const relativeX =
-          point.x - canvasCenterX - pinchStartOffsetXRef.current;
-        const relativeY =
-          point.y - canvasCenterY - pinchStartOffsetYRef.current;
+        const anchorVectorX =
+          anchorPoint.x - canvasCenterX - pinchStartOffsetXRef.current;
+        const anchorVectorY =
+          anchorPoint.y - canvasCenterY - pinchStartOffsetYRef.current;
 
-        setOffsetX(point.x - canvasCenterX - relativeX * zoomRatio);
-        setOffsetY(point.y - canvasCenterY - relativeY * zoomRatio);
+        const rotatedAnchorVector = rotateOffset(
+          anchorVectorX,
+          anchorVectorY,
+          angleDelta,
+        );
+
+        setOffsetX(
+          currentCenterPoint.x -
+            canvasCenterX -
+            rotatedAnchorVector.offsetX * zoomRatio,
+        );
+        setOffsetY(
+          currentCenterPoint.y -
+            canvasCenterY -
+            rotatedAnchorVector.offsetY * zoomRatio,
+        );
         setZoom(Math.round(nextZoom));
+        setRotation(nextRotation);
 
         return;
       }
