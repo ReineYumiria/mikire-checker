@@ -66,6 +66,10 @@ export const presets: Preset[] = [
       height: 340,
     },
     guideShape: "rect",
+    previewSizes: [
+      { label: "600 × 200", width: 600, height: 200, shape: "rect" },
+      { label: "300 × 100", width: 300, height: 100, shape: "rect" },
+    ],
     description:
       "X（旧Twitter）プロフィール上部に表示されるヘッダー画像です。端や左下付近の見切れに注意します。",
     notes: [
@@ -87,6 +91,12 @@ export const presets: Preset[] = [
       height: 400,
     },
     guideShape: "circle",
+    previewSizes: [
+      { label: "128 × 128", width: 128, height: 128, shape: "circle" },
+      { label: "64 × 64", width: 64, height: 64, shape: "circle" },
+      { label: "48 × 48", width: 48, height: 48, shape: "circle" },
+      { label: "32 × 32", width: 32, height: 32, shape: "circle" },
+    ],
     description:
       "X（旧Twitter）のプロフィール画像向けプリセットです。円形表示で外周が見切れやすいため、中央配置を確認します。",
     notes: [
@@ -134,6 +144,10 @@ export const presets: Preset[] = [
       height: 396,
     },
     guideShape: "rect",
+    previewSizes: [
+      { label: "480 × 270", width: 480, height: 270, shape: "rect" },
+      { label: "320 × 180", width: 320, height: 180, shape: "rect" },
+    ],
     description:
       "Discordサーバーのバナー画像向けプリセットです。16:9画像として表示確認します。",
     notes: [
@@ -154,6 +168,12 @@ export const presets: Preset[] = [
       height: 512,
     },
     guideShape: "circle",
+    previewSizes: [
+      { label: "128 × 128", width: 128, height: 128, shape: "circle" },
+      { label: "64 × 64", width: 64, height: 64, shape: "circle" },
+      { label: "40 × 40", width: 40, height: 40, shape: "circle" },
+      { label: "32 × 32", width: 32, height: 32, shape: "circle" },
+    ],
     description:
       "Discordサーバーアイコン向けプリセットです。円形表示を想定して、四隅や外周の見切れを確認します。",
     notes: [

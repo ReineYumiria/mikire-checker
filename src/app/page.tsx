@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
 import { ControlPanelAdjustments } from "@/components/ControlPanelAdjustments";
 import { ImageCanvas, type ImageCanvasHandle } from "@/components/ImageCanvas";
+import { ActualSizePreview } from "@/components/ActualSizePreview";
 import { AdSlot } from "@/components/AdSlot";
 import { CircleIconPreview } from "@/components/CircleIconPreview";
 import { PresetInfoPanel } from "@/components/PresetInfoPanel";
@@ -266,8 +267,8 @@ export default function Home() {
             />
           )}
 
-          {selectedPreset.guideShape === "circle" && (
-            <CircleIconPreview
+          {selectedPreset.previewSizes && selectedPreset.previewSizes.length > 0 && (
+            <ActualSizePreview
               imageUrl={imageUrl}
               zoom={zoom}
               offsetX={offsetX}
@@ -278,6 +279,20 @@ export default function Home() {
               preset={selectedPreset}
             />
           )}
+
+          {selectedPreset.guideShape === "circle" &&
+            !selectedPreset.previewSizes?.length && (
+              <CircleIconPreview
+                imageUrl={imageUrl}
+                zoom={zoom}
+                offsetX={offsetX}
+                offsetY={offsetY}
+                rotation={rotation}
+                flipX={flipX}
+                flipY={flipY}
+                preset={selectedPreset}
+              />
+            )}
         </section>
 
         <ControlPanelAdjustments
