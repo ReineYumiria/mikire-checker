@@ -112,7 +112,7 @@ export default function AboutPage() {
           <dl className="space-y-2 text-sm text-zinc-400">
             <div className="flex flex-wrap gap-x-2">
               <dt className="font-medium text-zinc-300">現在のバージョン：</dt>
-              <dd>v1.20.2</dd>
+              <dd>v1.20.3</dd>
             </div>
             <div className="flex flex-wrap gap-x-2">
               <dt className="font-medium text-zinc-300">最終更新：</dt>

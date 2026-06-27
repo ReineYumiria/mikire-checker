@@ -194,6 +194,12 @@ export const presets: Preset[] = [
       height: 512,
     },
     guideShape: "circle",
+    previewSizes: [
+      { label: "128 × 128", width: 128, height: 128, shape: "circle" },
+      { label: "64 × 64", width: 64, height: 64, shape: "circle" },
+      { label: "40 × 40", width: 40, height: 40, shape: "circle" },
+      { label: "32 × 32", width: 32, height: 32, shape: "circle" },
+    ],
     description:
       "Slackワークスペースのアイコン向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
     notes: [
@@ -214,6 +220,12 @@ export const presets: Preset[] = [
       height: 512,
     },
     guideShape: "circle",
+    previewSizes: [
+      { label: "128 × 128", width: 128, height: 128, shape: "circle" },
+      { label: "64 × 64", width: 64, height: 64, shape: "circle" },
+      { label: "40 × 40", width: 40, height: 40, shape: "circle" },
+      { label: "32 × 32", width: 32, height: 32, shape: "circle" },
+    ],
     description:
       "Slackプロフィール画像向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
     notes: [
@@ -711,6 +723,12 @@ export const presets: Preset[] = [
       height: 320,
     },
     guideShape: "circle",
+    previewSizes: [
+      { label: "128 × 128", width: 128, height: 128, shape: "circle" },
+      { label: "64 × 64", width: 64, height: 64, shape: "circle" },
+      { label: "44 × 44", width: 44, height: 44, shape: "circle" },
+      { label: "32 × 32", width: 32, height: 32, shape: "circle" },
+    ],
     description:
       "Instagramプロフィール画像向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
     notes: [
@@ -792,6 +810,12 @@ export const presets: Preset[] = [
       height: 720,
     },
     guideShape: "circle",
+    previewSizes: [
+      { label: "128 × 128", width: 128, height: 128, shape: "circle" },
+      { label: "64 × 64", width: 64, height: 64, shape: "circle" },
+      { label: "48 × 48", width: 48, height: 48, shape: "circle" },
+      { label: "32 × 32", width: 32, height: 32, shape: "circle" },
+    ],
     description:
       "TikTokプロフィール画像向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
     notes: [
@@ -833,6 +857,12 @@ export const presets: Preset[] = [
       height: 320,
     },
     guideShape: "circle",
+    previewSizes: [
+      { label: "128 × 128", width: 128, height: 128, shape: "circle" },
+      { label: "64 × 64", width: 64, height: 64, shape: "circle" },
+      { label: "48 × 48", width: 48, height: 48, shape: "circle" },
+      { label: "32 × 32", width: 32, height: 32, shape: "circle" },
+    ],
     description:
       "Threadsのプロフィール画像向けプリセットです。円形表示を想定して、外周の見切れを確認します。",
     notes: [
@@ -1066,6 +1096,12 @@ export const presets: Preset[] = [
       height: 400,
     },
     guideShape: "circle",
+    previewSizes: [
+      { label: "128 × 128", width: 128, height: 128, shape: "circle" },
+      { label: "64 × 64", width: 64, height: 64, shape: "circle" },
+      { label: "48 × 48", width: 48, height: 48, shape: "circle" },
+      { label: "32 × 32", width: 32, height: 32, shape: "circle" },
+    ],
     description:
       "Blueskyのプロフィール画像用。表示時は円形にトリミングされるため、中央に重要な要素を置く想定。",
     notes: [
@@ -1112,6 +1148,12 @@ export const presets: Preset[] = [
       height: 1000,
     },
     guideShape: "circle",
+    previewSizes: [
+      { label: "128 × 128", width: 128, height: 128, shape: "circle" },
+      { label: "64 × 64", width: 64, height: 64, shape: "circle" },
+      { label: "48 × 48", width: 48, height: 48, shape: "circle" },
+      { label: "32 × 32", width: 32, height: 32, shape: "circle" },
+    ],
     description:
       "Misskey系サービスのアイコン用目安。円形表示される場面を想定。",
     notes: [
@@ -1147,6 +1189,12 @@ export const presets: Preset[] = [
       height: 400,
     },
     guideShape: "circle",
+    previewSizes: [
+      { label: "128 × 128", width: 128, height: 128, shape: "circle" },
+      { label: "64 × 64", width: 64, height: 64, shape: "circle" },
+      { label: "48 × 48", width: 48, height: 48, shape: "circle" },
+      { label: "32 × 32", width: 32, height: 32, shape: "circle" },
+    ],
     description:
       "Mastodonのアバター画像向けプリセットです。公式ドキュメントで400×400pxに縮小されることが案内されています。円形または丸みのある表示を想定して、外周の見切れを確認します。",
     notes: [
@@ -1221,6 +1269,12 @@ export const presets: Preset[] = [
       height: 320,
     },
     guideShape: "circle",
+    previewSizes: [
+      { label: "128 × 128", width: 128, height: 128, shape: "circle" },
+      { label: "64 × 64", width: 64, height: 64, shape: "circle" },
+      { label: "40 × 40", width: 40, height: 40, shape: "circle" },
+      { label: "32 × 32", width: 32, height: 32, shape: "circle" },
+    ],
     description:
       "Facebookプロフィール画像向けプリセットです。丸く表示されることを想定して、中央配置と外周の見切れを確認します。",
     notes: [
