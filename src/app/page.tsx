@@ -318,49 +318,149 @@ export default function Home() {
 
       <section className="mx-auto max-w-7xl px-6 py-8">
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900 px-8 py-8">
-          <h2 className="mb-2 text-lg font-semibold text-zinc-100">
-            見切れチェッカーとは
+          <h2 className="mb-3 text-xl font-semibold text-zinc-100">
+            見切れチェッカーでできること
           </h2>
-          <p className="mb-6 leading-relaxed text-zinc-400">
-            画像をアップロードして、各サービスの表示範囲・安全領域をブラウザ内で確認できる無料のWebツールです。
-            YouTubeサムネイル、X（旧Twitter）ヘッダー、Discordアイコン、Steamカプセル画像など、創作・配信・ゲーム・SNS向けのプリセットを多数用意しています。
+          <p className="mb-8 leading-relaxed text-zinc-400">
+            見切れチェッカーは、YouTube、X（旧Twitter）、Discordなどに投稿する画像が、実際の表示枠で切れて見えないかを事前に確認するためのWebツールです。
+            サムネイル、ヘッダー、プロフィール画像、バナー、ストア画像などの用途に合わせて、画像の位置・ズーム・回転を調整し、必要に応じてPNGとして書き出せます。
           </p>
 
-          <div className="mb-6 grid gap-4 sm:grid-cols-2">
-            <div>
-              <p className="mb-2 text-sm font-medium text-zinc-300">主な機能</p>
-              <ul className="space-y-1 text-sm text-zinc-500">
-                <li>・ 安全領域ガイド表示（矩形 / 円形）</li>
-                <li>・ 画像のドラッグ位置調整</li>
-                <li>・ ズーム調整（ホイール・ピンチ対応）</li>
-                <li>・ PNG書き出し / ガイド付きPNG書き出し</li>
-              </ul>
+          <div className="mb-8 grid gap-4 lg:grid-cols-3">
+            <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-5">
+              <p className="mb-2 text-sm font-semibold text-zinc-200">
+                表示範囲を確認
+              </p>
+              <p className="text-sm leading-relaxed text-zinc-500">
+                各プリセットの出力サイズに合わせて、画像がどのように収まるかをプレビューできます。顔、ロゴ、文字、商品画像など、切れて困る要素の配置確認に役立ちます。
+              </p>
             </div>
-            <div>
-              <p className="mb-2 text-sm font-medium text-zinc-300">プライバシー</p>
-              <p className="text-sm text-zinc-500">
-                アップロードした画像はサーバーに送信されません。画像の読み込み・プレビュー・書き出しはすべてブラウザ内で処理されます。
+            <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-5">
+              <p className="mb-2 text-sm font-semibold text-zinc-200">
+                安全領域を確認
+              </p>
+              <p className="text-sm leading-relaxed text-zinc-500">
+                ヘッダーや丸型アイコンなど、端末や表示場所によって見切れやすい画像には安全領域ガイドを表示できます。重要要素を中央寄りに置く判断材料になります。
+              </p>
+            </div>
+            <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-5">
+              <p className="mb-2 text-sm font-semibold text-zinc-200">
+                PNGとして書き出し
+              </p>
+              <p className="text-sm leading-relaxed text-zinc-500">
+                調整した結果をPNGとして保存できます。ガイド付きPNGは、投稿前の確認やチーム内共有用のチェック画像として利用できます。
               </p>
             </div>
           </div>
 
+          <div className="mb-8 grid gap-8 lg:grid-cols-[1fr_1fr]">
+            <section>
+              <h3 className="mb-3 text-lg font-semibold text-zinc-100">
+                使い方3ステップ
+              </h3>
+              <ol className="space-y-3 text-sm leading-relaxed text-zinc-400">
+                <li>
+                  <span className="font-semibold text-zinc-200">1. 画像をアップロード</span>
+                  <br />
+                  確認したいPNG、JPG、WebP画像を選択します。
+                </li>
+                <li>
+                  <span className="font-semibold text-zinc-200">2. サービスと用途を選ぶ</span>
+                  <br />
+                  YouTubeサムネイル、Twitterヘッダー、Discordアイコンなど、目的に近いプリセットを選択します。
+                </li>
+                <li>
+                  <span className="font-semibold text-zinc-200">3. 位置を整えて書き出す</span>
+                  <br />
+                  ドラッグ、ズーム、回転で見え方を調整し、安全領域を確認してからPNGを書き出します。
+                </li>
+              </ol>
+              <Link href="/how-to-use" className="mt-4 inline-block text-sm text-sky-400 hover:underline">
+                詳しい使い方を見る →
+              </Link>
+            </section>
+
+            <section>
+              <h3 className="mb-3 text-lg font-semibold text-zinc-100">
+                対応プリセットについて
+              </h3>
+              <p className="mb-3 text-sm leading-relaxed text-zinc-400">
+                プリセットは、サービス名と用途ごとに出力サイズや安全領域の目安をまとめたものです。SNSのプロフィール画像、動画サムネイル、配信用バナー、ゲームストア画像など、用途によって必要な比率や見切れやすい場所が異なります。
+              </p>
+              <p className="text-sm leading-relaxed text-zinc-400">
+                代表的には、YouTubeサムネイル、X（旧Twitter）ヘッダー、Discordサーバーアイコン、Steamカプセル画像、pixivやnoteのカバー画像などに対応しています。サービス側の表示仕様は変わることがあるため、最終投稿前には実際の画面でも確認してください。
+              </p>
+            </section>
+          </div>
+
+          <div className="mb-8 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
+            <h3 className="mb-3 text-lg font-semibold text-zinc-100">
+              画像の扱いとプライバシー
+            </h3>
+            <p className="text-sm leading-relaxed text-zinc-400">
+              アップロードした画像はサーバーへ送信されません。画像の読み込み、Canvas上のプレビュー、位置調整、PNG書き出しは、すべて利用中のブラウザ内で処理されます。公開前のサムネイル案やプロフィール画像を確認したい場合でも、サイト側に画像ファイルを保存しない設計です。
+            </p>
+          </div>
+
+          <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_1fr]">
+            <section>
+              <h3 className="mb-3 text-lg font-semibold text-zinc-100">
+                よくある質問
+              </h3>
+              <div className="space-y-4 text-sm leading-relaxed text-zinc-400">
+                <div>
+                  <p className="font-semibold text-zinc-200">
+                    画像はどこかにアップロードされますか？
+                  </p>
+                  <p>
+                    いいえ。選択した画像はブラウザ内で読み込まれ、サーバーには送信されません。
+                  </p>
+                </div>
+                <div>
+                  <p className="font-semibold text-zinc-200">
+                    安全領域は公式仕様ですか？
+                  </p>
+                  <p>
+                    一部は公式推奨サイズを参考にしつつ、見切れ確認用の目安として設定しています。端末差やサービス側の変更があるため、最終確認には実機表示も併用してください。
+                  </p>
+                </div>
+                <div>
+                  <p className="font-semibold text-zinc-200">
+                    スマホでも使えますか？
+                  </p>
+                  <p>
+                    スマホでも画像選択、ドラッグ、ピンチズーム、PNG書き出しを利用できます。大きな画像を扱う場合は、端末のメモリ状況によって動作が重くなることがあります。
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h3 className="mb-3 text-lg font-semibold text-zinc-100">
+                関連ガイド
+              </h3>
+              <div className="grid gap-3 text-sm">
+                <Link href="/guides/youtube-thumbnail-safe-area" className="rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-3 text-zinc-300 hover:border-zinc-700 hover:text-zinc-100">
+                  YouTubeサムネイルの見切れ確認ガイド
+                </Link>
+                <Link href="/guides/twitter-header-safe-area" className="rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-3 text-zinc-300 hover:border-zinc-700 hover:text-zinc-100">
+                  Twitterヘッダーの安全領域ガイド
+                </Link>
+                <Link href="/guides/discord-profile-image" className="rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-3 text-zinc-300 hover:border-zinc-700 hover:text-zinc-100">
+                  Discordアイコン・バナーの見切れ確認
+                </Link>
+              </div>
+            </section>
+          </div>
+
           <div className="flex flex-wrap gap-3 text-sm">
-            <Link
-              href="/how-to-use"
-              className="text-sky-400 hover:underline"
-            >
-              使い方を見る →
+            <Link href="/about" className="text-sky-400 hover:underline">
+              このサイトについて →
             </Link>
-            <Link
-              href="/about"
-              className="text-sky-400 hover:underline"
-            >
-              対応サービス一覧 →
+            <Link href="/contact" className="text-sky-400 hover:underline">
+              お問い合わせ →
             </Link>
-            <Link
-              href="/privacy"
-              className="text-sky-400 hover:underline"
-            >
+            <Link href="/privacy" className="text-sky-400 hover:underline">
               プライバシーポリシー →
             </Link>
           </div>
@@ -379,6 +479,14 @@ export default function Home() {
           <span>/</span>
           <Link href="/privacy" className="hover:text-zinc-300">
             プライバシーポリシー
+          </Link>
+          <span>/</span>
+          <Link href="/contact" className="hover:text-zinc-300">
+            お問い合わせ
+          </Link>
+          <span>/</span>
+          <Link href="/guides/youtube-thumbnail-safe-area" className="hover:text-zinc-300">
+            ガイド
           </Link>
           <span>/</span>
           <a
