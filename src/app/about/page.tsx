@@ -107,6 +107,20 @@ export default function AboutPage() {
           </div>
         </section>
 
+        <section className="mb-10 rounded-xl border border-zinc-800 bg-zinc-900 p-5">
+          <h2 className="mb-3 text-lg font-semibold text-zinc-200">補足情報</h2>
+          <dl className="space-y-2 text-sm text-zinc-400">
+            <div className="flex flex-wrap gap-x-2">
+              <dt className="font-medium text-zinc-300">現在のバージョン：</dt>
+              <dd>v1.20.0</dd>
+            </div>
+            <div className="flex flex-wrap gap-x-2">
+              <dt className="font-medium text-zinc-300">最終更新：</dt>
+              <dd>2026-06-27</dd>
+            </div>
+          </dl>
+        </section>
+
         <div className="flex flex-wrap gap-3 text-sm">
           <Link href="/" className="text-sky-400 hover:underline">ツールを使う →</Link>
           <Link href="/how-to-use" className="text-sky-400 hover:underline">使い方を見る →</Link>
