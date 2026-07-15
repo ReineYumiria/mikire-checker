@@ -13,7 +13,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const adsenseClient = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT ?? "";
+const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID ?? "";
+const adsenseEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === "true";
+const shouldLoadAdsenseScript =
+  process.env.NODE_ENV === "production" && adsenseEnabled && adsenseClient !== "";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mikire-checker.vercel.app"),
@@ -61,12 +64,13 @@ export default function RootLayout({
       lang="ja"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      {adsenseClient && (
+      {shouldLoadAdsenseScript && (
         <Script
+          id="adsense-script"
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
           crossOrigin="anonymous"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
         />
       )}
       <body className="min-h-full flex flex-col">{children}</body>
